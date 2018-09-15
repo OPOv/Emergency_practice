@@ -31,6 +31,7 @@
         <activity android:name=".HospiterActivity"></activity>
         <activity android:name=".KnowledgeActivity"></activity>
         <activity android:name=".ShelterActivity"></activity>
+        <activity android:name=".KnowledgeDataActivity"></activity>
     </application>
 
 </manifest>

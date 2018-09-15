@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/adapter_name"
+        android:layout_width="319dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="14dp"
+        android:background="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/adapter_day"
+        android:layout_width="319dp"
+        android:layout_height="33dp"
+        android:layout_alignStart="@+id/adapter_name"
+        android:layout_below="@+id/adapter_name"
+        android:background="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/adapter_subject"
+        android:layout_width="319dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/adapter_name"
+        android:layout_below="@+id/adapter_day"
+        android:text="TextView"
+        android:textStyle="bold"
+        android:background="@color/colorWhite"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="11dp"
+        android:layout_height="62dp"
+        android:layout_alignBottom="@+id/adapter_day"
+        android:layout_marginBottom="-7dp"
+        android:layout_marginEnd="-25dp"
+        android:layout_toStartOf="@+id/adapter_name"
+        app:srcCompat="@android:color/holo_blue_bright" />
+
+
+</RelativeLayout>
