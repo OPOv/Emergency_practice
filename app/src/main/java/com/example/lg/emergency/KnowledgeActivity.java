@@ -1,7 +1,5 @@
 package com.example.lg.emergency;
 
-import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 
 
 public class KnowledgeActivity extends AppCompatActivity {
@@ -34,7 +30,7 @@ public class KnowledgeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_knowledge);
 
 /////////////////////////////////////////////////////////////////////////////////// listview
-        Adapter adapter =  new knowledge_listview_adapter(this,mitem1,mitem2,mitem3);
+        Adapter adapter =  new KnowledgeAdapter(this,mitem1,mitem2,mitem3);
 
 
         final ListView listview = (ListView) findViewById(R.id.knowledge_listview) ;
@@ -57,13 +53,13 @@ public class KnowledgeActivity extends AppCompatActivity {
 
             }
         });
-   ////////////////////////////////////////////////////////////////////////////////end listview
+        ////////////////////////////////////////////////////////////////////////////////end listview
 
-        String[] spinner_list = new String[3];
-        spinner_list[0] = "천재지변";
+        String[] spinner_list = new String[4];
+        spinner_list[0] = "전체보기";
         spinner_list[1] = "위급상황";
         spinner_list[2] = "전쟁상황";
-
+        spinner_list[3] = "천재지변";
         spinner = (Spinner)findViewById(R.id.knowledge_spinner);
         ArrayAdapter spinnerAdapter;
         spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, spinner_list);
@@ -73,25 +69,9 @@ public class KnowledgeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                String[] buffer1 = new String[0];
-                String[] buffer2 = new String[0];
-                String[] buffer3 = new String[0];
-
-                int cnt =0;
                 if(position == 0)
                 {
-
-                    for(int i = 0; mitem1.length > i; i++)
-                    {
-                            if(mitem2[i] == "천재지변")
-                            {
-                                buffer1[cnt]=mitem1[i];
-                                buffer2[cnt]=mitem2[i];
-                                buffer3[cnt]=mitem3[i];
-                                cnt++;
-                            }
-                    }
-//                    Adapter adapter =  new knowledge_listview_adapter(this,buffer1,buffer2,buffer3);
+//                  //  Adapter adapter =  new KnowledgeAdapter(this,mitem1,mitem2,mitem3);
 //
 //
 //                    final ListView listview = (ListView) findViewById(R.id.knowledge_listview) ;

@@ -1,5 +1,7 @@
 package com.example.lg.emergency;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
-public class knowledge_listview_adapter extends ArrayAdapter<String> {
+
+public class KnowledgeAdapter extends ArrayAdapter<String> {
 
     String[] Item1;
     String[] Item2;
@@ -15,7 +18,7 @@ public class knowledge_listview_adapter extends ArrayAdapter<String> {
 
 
 
-    knowledge_listview_adapter(KnowledgeActivity context, String[] item1, String[] item2, String[] item3)
+    KnowledgeAdapter(Context context, String[] item1, String[] item2, String[] item3)
     {
         super(context, R.layout.activity_knowledge_listview, item1);
 
@@ -31,10 +34,10 @@ public class knowledge_listview_adapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         LayoutInflater imageInflater = LayoutInflater.from(getContext());//여기서 오류날수있음
-        View view = imageInflater.inflate(R.layout.activity_knowledge_listview,parent,false);
-        TextView name =(TextView) view.findViewById(R.id.adapter_name);
-        TextView day =(TextView) view.findViewById(R.id.adapter_day);
-        TextView subject =(TextView) view.findViewById(R.id.adapter_subject);
+        @SuppressLint("ViewHolder") View view = imageInflater.inflate(R.layout.activity_knowledge_listview,parent,false);
+        TextView name = view.findViewById(R.id.adapter_name);
+        TextView day = view.findViewById(R.id.adapter_day);
+        TextView subject = view.findViewById(R.id.adapter_subject);
 
 
         String i1 =Item1[position];
