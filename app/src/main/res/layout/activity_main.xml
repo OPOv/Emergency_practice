@@ -1,61 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <ImageButton
-        android:id="@+id/shelter"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/cotent_main_top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="134dp"
-        android:background="@color/colorWhite"
-        android:onClick="shelter_btn"
-        app:srcCompat="@drawable/green_circle" />
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/knowledge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="115dp"
-        android:background="@color/colorWhite"
-        android:onClick="knowledge_btn"
-        app:srcCompat="@drawable/red_circle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="20dp">
 
-    <ImageButton
-        android:id="@+id/hospiter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@color/colorWhite"
-        android:onClick="hospiter_btn"
-        app:srcCompat="@drawable/yello_circle"
-        />
+            <Button
+                android:id="@+id/shelter"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:onClick="shelter_btn"
+                android:text="대피소"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:background="@drawable/ic_circle_green" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="206dp"
-        android:layout_height="68dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-34dp"
-        android:layout_toEndOf="@+id/imageView2"
-        app:srcCompat="@drawable/app_logo_text" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="50dp"
-        android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/app_logo_image" />
+            <Button
+                android:id="@+id/hospital"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:onClick="hospital_btn"
+                android:textSize="30sp"
+                android:textColor="@color/colorWhite"
+                android:text="병원"
+                android:background="@drawable/ic_circle_red"/>
 
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="206dp"-->
+        <!--android:layout_height="68dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginStart="-34dp"-->
+        <!--android:layout_toEndOf="@+id/imageView2"-->
+        <!--app:srcCompat="@drawable/app_logo_text" />-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView2"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="63dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--app:srcCompat="@drawable/app_logo_image" />-->
+
+
+</ScrollView>

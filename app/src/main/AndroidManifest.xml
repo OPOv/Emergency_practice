@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lg.emergency">
     <!--반드시 추가--><uses-permission android:name="android.permission.INTERNET" />
     <!--위치정보활용시 추가--><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -15,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Splashscreen"
+        <activity android:name=".SplashActivity"
             android:noHistory="true">
             <intent-filter>
 
@@ -33,7 +34,7 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".HospiterActivity" />
+        <activity android:name=".HospitalActivity" />
         <activity android:name=".KnowledgeActivity" />
         <activity android:name=".ShelterActivity" />
         <activity android:name=".KnowledgeDataActivity" />

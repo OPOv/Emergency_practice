@@ -30,29 +30,29 @@ public class KnowledgeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_knowledge);
 
 /////////////////////////////////////////////////////////////////////////////////// listview
-        Adapter adapter =  new KnowledgeAdapter(this,mitem1,mitem2,mitem3);
-
-
-        final ListView listview = (ListView) findViewById(R.id.knowledge_listview) ;
-
-        listview.setAdapter((ListAdapter) adapter);
-
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getApplicationContext(),KnowledgeDataActivity.class);
-                intent.putExtra("title", mitem1[position]);
-                intent.putExtra("day", mitem2[position]);
-                intent.putExtra("subject", mitem3[position]);
-
-
-                startActivity(intent);
-
-
-            }
-        });
+//        Adapter adapter =  new KnowledgeAdapter(this,mitem1,mitem2,mitem3);
+//
+//
+//        final ListView listview = (ListView) findViewById(R.id.knowledge_listview) ;
+//
+//        listview.setAdapter((ListAdapter) adapter);
+//
+//
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Intent intent = new Intent(getApplicationContext(),KnowledgeDataActivity.class);
+//                intent.putExtra("title", mitem1[position]);
+//                intent.putExtra("day", mitem2[position]);
+//                intent.putExtra("subject", mitem3[position]);
+//
+//
+//                startActivity(intent);
+//
+//
+//            }
+//        });
         ////////////////////////////////////////////////////////////////////////////////end listview
 
         String[] spinner_list = new String[4];

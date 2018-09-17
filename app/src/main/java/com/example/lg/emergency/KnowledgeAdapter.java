@@ -2,56 +2,63 @@ package com.example.lg.emergency;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
 
 
-public class KnowledgeAdapter extends ArrayAdapter<String> {
+public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.ViewHolder> {
 
-    String[] Item1;
-    String[] Item2;
-    String[] Item3;
+    private Context mContext;
+    private List<KnowledgeItem> items;
+    int item_layout;
 
-
-
-    KnowledgeAdapter(Context context, String[] item1, String[] item2, String[] item3)
-    {
-        super(context, R.layout.activity_knowledge_listview, item1);
-
-
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-
-
+    public KnowledgeAdapter(Context mContext, List<KnowledgeItem> items, int item_layout){
+        this.mContext = mContext;
+        this.items = items;
+        this.item_layout = item_layout;
 
     }
 
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        LayoutInflater imageInflater = LayoutInflater.from(getContext());//여기서 오류날수있음
-        @SuppressLint("ViewHolder") View view = imageInflater.inflate(R.layout.activity_knowledge_listview,parent,false);
-        TextView name = view.findViewById(R.id.adapter_name);
-        TextView day = view.findViewById(R.id.adapter_day);
-        TextView subject = view.findViewById(R.id.adapter_subject);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_knowledge, null);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
 
-        String i1 =Item1[position];
-        String i2 =Item2[position];
-        String i3 =Item3[position];
+        final KnowledgeItem item = items.get(position);
+        viewHolder.txtTitle.setText(item.getTitle());
+        viewHolder.txtDate.setText(item.getDate());
+        viewHolder.txtCont.setText(item.getSubtitle());
 
+    }
 
+    @Override
+    public int getItemCount() {
+        return this.items.size();
+    }
 
-        name.setText(i1);
-        day.setText(i2);
-        subject.setText(i3);
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView txtTitle, txtDate, txtCont;
 
-        return view;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            txtTitle = itemView.findViewById(R.id.adapter_name);
+            txtDate = itemView.findViewById(R.id.adapter_day);
+            txtCont = itemView.findViewById(R.id.adapter_subject);
+
+        }
     }
 
 }
