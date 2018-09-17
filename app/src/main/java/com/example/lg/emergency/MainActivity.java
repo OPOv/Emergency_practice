@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < item.length; i++)
             items.add(item[i]);
 
-        mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items, R.layout.activity_main));
+        mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items));
     }
 
     public void shelter_btn(View view) { //go to shelter class

@@ -38,7 +38,6 @@ import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.maps.overlay.NMapPathData;
 import com.nhn.android.maps.overlay.NMapPathLineStyle;
-import com.nhn.android.mapviewer.overlay.NMapCalloutCustomOverlay;
 import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
@@ -98,7 +97,7 @@ public class NMapViewer extends NMapActivity {
         if (USE_XML_LAYOUT) {
             setContentView(R.layout.activity_nmap);
 
-            mMapView = (NMapView)findViewById(R.id.mapView);
+            mMapView = findViewById(R.id.mapView);
         } else {
             // create map view
             mMapView = new NMapView(this);
@@ -624,10 +623,10 @@ public class NMapViewer extends NMapActivity {
             }
 
             // use custom callout overlay
-            return new NMapCalloutCustomOverlay(itemOverlay, overlayItem, itemBounds, mMapViewerResourceProvider);
+//            return new NMapCalloutCustomOverlay(itemOverlay, overlayItem, itemBounds, mMapViewerResourceProvider);
 
             // set basic callout overlay
-            //return new NMapCalloutBasicOverlay(itemOverlay, overlayItem, itemBounds);
+            return new NMapCalloutBasicOverlay(itemOverlay, overlayItem, itemBounds);
         }
 
     };

@@ -7,27 +7,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="20dp">
+        android:paddingTop="10dp">
 
-        <ImageButton
-            android:id="@+id/shelter"
+        <Button
+            android:id="@+id/btn_shelter"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+            android:layout_height="160dp"
             android:onClick="shelter_btn"
-            android:src="@drawable/green_circle" />
+            android:text="대피소"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:layout_margin="20dp"
+            android:background="@drawable/ic_circle_green" />
 
-        <ImageButton
-            android:id="@+id/hospital"
+        <Button
+            android:id="@+id/btn_hospital"
             android:layout_weight="1"
+            android:layout_margin="20dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+            android:layout_height="160dp"
             android:onClick="hospital_btn"
-            android:src="@drawable/yello_circle"/>
+            android:textSize="30sp"
+            android:textColor="@color/colorWhite"
+            android:text="병원"
+            android:background="@drawable/ic_circle_red"/>
 
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
