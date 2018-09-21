@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.lg.emergency.nmap.NMapViewer;
 
@@ -31,23 +32,48 @@ public class MainActivity extends AppCompatActivity {
         mainRecycler.setHasFixedSize(true);
         mainRecycler.setLayoutManager(layoutManager);
 
+        ;
+
+
+
+
         List<KnowledgeItem> items = new ArrayList<>();
         // 나중에 갯수 받아와서 크기 조절하는 걸로 수정 필요
-        KnowledgeItem[] item = new KnowledgeItem[9];
-        item[0] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변");
-        item[1] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병");
-        item[2] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변");
-        item[3] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변");
-        item[4] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병");
-        item[5] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변");
-        item[6] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변");
-        item[7] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병");
-        item[8] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변");
+        final KnowledgeItem[] item = new KnowledgeItem[9];
+        item[0] = new KnowledgeItem(R.drawable.forest,"심폐소생술 실습", "September 21, 2018", "천재지변");
+        item[1] = new KnowledgeItem(R.drawable.safari,"ADV 사용 방법", "September 21, 2018", "질병");
+        item[2] = new KnowledgeItem(R.drawable.snow,"지진발생 대피요령", "September 21, 2018", "천재지변");
+        item[3] = new KnowledgeItem(R.drawable.test,"심폐소생술 실습", "September 21, 2018", "천재지변");
+        item[4] = new KnowledgeItem(R.drawable.forest,"ADV 사용 방법", "September 21, 2018", "질병");
+        item[5] = new KnowledgeItem(R.drawable.safari,"지진발생시 대피요령", "September 21, 2018", "천재지변");
+        item[6] = new KnowledgeItem(R.drawable.snow,"심폐소생술 실습", "September 21, 2018", "천재지변");
+        item[7] = new KnowledgeItem(R.drawable.test,"ADV 사용 방법", "September 21, 2018", "질병");
+        item[8] = new KnowledgeItem(R.drawable.forest,"지진발생 대피요령", "September 21, 2018", "천재지변");
 
         for(int i = 0; i < item.length; i++)
             items.add(item[i]);
 
         mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items));
+
+
+        ItemClickSupport.addTo(mainRecycler).setOnItemClickListener(new ItemClickSupport.OnItemClickListener(){
+
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+
+                Intent intent = new Intent(getApplicationContext(),KnowledgeDataActivity.class);
+
+                intent.putExtra("image",Integer.toString(item[position-1].getImage()));
+                intent.putExtra("title", item[position-1].getTitle());
+                intent.putExtra("day", item[position-1].getDate());
+                intent.putExtra("subject", item[position-1].getSubtitle());
+
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void shelter_btn(View view) { //go to shelter class

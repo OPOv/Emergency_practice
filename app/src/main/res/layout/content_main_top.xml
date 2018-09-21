@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="10dp">
+        android:layout_height="302dp"
 
-        <Button
+        tools:ignore="MissingConstraints"
+
+        >
+
+        <ImageButton
             android:id="@+id/btn_shelter"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_width="134dp"
+            android:layout_height="125dp"
+
+
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="36dp"
+            android:background="@color/colorWhite"
             android:onClick="shelter_btn"
-            android:text="대피소"
-            android:textColor="@color/colorWhite"
-            android:textSize="30sp"
-            android:layout_margin="20dp"
-            android:background="@drawable/ic_circle_green" />
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/shelter2" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btn_hospital"
-            android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_width="134dp"
+            android:layout_height="125dp"
+
+
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/btn_shelter"
+            android:layout_marginRight="36dp"
+            android:layout_marginBottom="70dp"
+            android:background="@color/colorWhite"
             android:onClick="hospital_btn"
-            android:textSize="30sp"
-            android:textColor="@color/colorWhite"
-            android:text="병원"
-            android:background="@drawable/ic_circle_red"/>
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/hospital2" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="142dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/app_logo_text" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="43dp"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_marginStart="38dp"
+            app:srcCompat="@drawable/app_logo_image" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

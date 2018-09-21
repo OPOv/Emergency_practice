@@ -3,6 +3,9 @@ package com.example.lg.emergency;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.example.lg.emergency.nmap.NMapViewer;
 
@@ -21,6 +27,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<KnowledgeItem> items;
+
 
     private final int HEADER = -1;
     private final int BODY = 0;
@@ -57,6 +64,9 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
         if(viewHolder instanceof KnowledgeViewHolder) {
             final KnowledgeItem item = items.get(position - 1);
+
+//            Drawable drawable=mContext.getResources().getDrawable(item.getImage());
+            ((KnowledgeViewHolder)viewHolder).imgImage.setImageResource(item.getImage());
             ((KnowledgeViewHolder)viewHolder).txtTitle.setText(item.getTitle());
             ((KnowledgeViewHolder)viewHolder).txtDate.setText(item.getDate());
             ((KnowledgeViewHolder)viewHolder).txtCont.setText(item.getSubtitle());
@@ -74,6 +84,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     Intent mIntent = new Intent(mContext, NMapViewer.class);
                     mContext.startActivity(mIntent);
+                    
                 }
             });
         }
@@ -86,7 +97,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
     }
 
     class KnowledgeHeader extends RecyclerView.ViewHolder{
-        Button btnShelter, btnHospital;
+        ImageButton btnShelter, btnHospital;
 
         public KnowledgeHeader(View itemView) {
             super(itemView);
@@ -98,12 +109,15 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
     class KnowledgeViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtTitle, txtDate, txtCont;
-
+        ImageView imgImage;
         public KnowledgeViewHolder(View itemView) {
             super(itemView);
+            imgImage = itemView.findViewById(R.id.adapter_image);
             txtTitle = itemView.findViewById(R.id.adapter_name);
             txtDate = itemView.findViewById(R.id.adapter_day);
             txtCont = itemView.findViewById(R.id.adapter_subject);
+
+
 
         }
     }
