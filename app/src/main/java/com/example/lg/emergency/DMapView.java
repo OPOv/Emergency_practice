@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 public class DMapView extends AppCompatActivity {
@@ -16,8 +17,10 @@ public class DMapView extends AppCompatActivity {
         MapView mapView = new MapView(this);
         mapView.setDaumMapApiKey(getResources().getString(R.string.kakao_app_key));
 
+//        MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
         ViewGroup mapViewContainer = findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
+//        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord());
     }
 }
