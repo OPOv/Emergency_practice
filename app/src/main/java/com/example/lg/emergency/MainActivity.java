@@ -1,15 +1,15 @@
 package com.example.lg.emergency;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.lg.emergency.nmap.NMapViewer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mainRecycler.setHasFixedSize(true);
         mainRecycler.setLayoutManager(layoutManager);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 2);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        ;
 
 
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void hospital_btn(View view) { //go to hospital class
 
-        Intent Myintent = new Intent(getApplicationContext(), NMapViewer.class);
+        Intent Myintent = new Intent(getApplicationContext(), DMapView.class);
         startActivity(Myintent);
 
     }

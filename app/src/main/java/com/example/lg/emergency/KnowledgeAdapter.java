@@ -18,8 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.lg.emergency.nmap.NMapViewer;
-
 import java.util.List;
 
 
@@ -82,7 +80,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
             ((KnowledgeHeader)viewHolder).btnHospital.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent mIntent = new Intent(mContext, NMapViewer.class);
+                    Intent mIntent = new Intent(mContext, DMapView.class);
                     mContext.startActivity(mIntent);
                     
                 }

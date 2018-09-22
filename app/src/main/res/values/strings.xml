@@ -2,5 +2,6 @@
     <string name="app_name">위급이</string>
     <string name="hello">Hello World, NMapViewer!</string>
     <string name="str_done">완료</string>
+    <string name="kakao_app_key">3c7b66994bc02c21a1129b00228d5ad5</string>
 
 </resources>

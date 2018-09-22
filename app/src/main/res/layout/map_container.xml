@@ -47,10 +47,4 @@ android:layout_height="fill_parent" >
         android:layout_below="@+id/edtMessage"
         android:layout_marginLeft="14dp"
         android:text="위치전송" />
-    <com.nhn.android.maps.NMapView
-        android:layout_width="fill_parent"
-        android:layout_height="330dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/app_name"
-    android:id="@+id/mapView"/>
 </RelativeLayout>
