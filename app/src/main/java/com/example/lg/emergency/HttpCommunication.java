@@ -39,11 +39,11 @@ public class HttpCommunication  {
 
                 if(infoDB.getName().equals("HospitalDB")) {
                     String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                    dao.JsonPasing(jsonData, attribute);
+                    //dao.JsonPasing(jsonData, attribute);
                 }
                 else if(infoDB.getName().equals("ShelterDB")) {
                     String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                    dao.JsonPasing(jsonData, attribute);
+                    //dao.JsonPasing(jsonData, attribute);
                 }
                 /*
                 else if(infoDB.getName().equals("KnowledgeDB")){
