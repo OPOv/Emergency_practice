@@ -2,9 +2,15 @@ package com.example.lg.emergency;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -15,9 +21,8 @@ import cz.msebera.android.httpclient.Header;
  *   2. public void URLConnection(String subURL, final String dbName) : AsyncHttpClient를 사용 API에서 데이터 받아오기
 */
 
-public class HttpCommunication {
+public class HttpCommunication  {
     private static AsyncHttpClient ahClient;
-    private static String apiURL = "http://data.gwd.go.kr/apiservice/KEY/json/";
     private Context context;
 
     public HttpCommunication(Context context)
@@ -26,25 +31,56 @@ public class HttpCommunication {
         ahClient = new AsyncHttpClient();
     }
 
-    public void URLConnection(String subURL, final String dbName)
-    {
-        ahClient.get(apiURL + subURL, new AsyncHttpResponseHandler() {
+    public void URLConnectionForAPI(final InformationDB infoDB) {
+        ahClient.get(infoDB.getURL(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("TEST1 AsyncHttpClient","연결성공 status code : " + statusCode);
-                if(statusCode == 200) {
+                String jsonData = new String(responseBody);
 
-                    String jsonData = new String(responseBody);
+                Dao dao = new Dao(context, infoDB);
+                dao.ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB.getName() + infoDB.getAttribute());
 
-                    Dao dao = new Dao(context,dbName);
-                    dao.InsertDB(jsonData);
+                if(infoDB.getName().equals("HospitalDB")) {
+                    String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
+                    dao.JsonPasing(jsonData, attribute);
+                }
+                else if(infoDB.getName().equals("ShelterDB")) {
+                    String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
+                    dao.JsonPasing(jsonData, attribute);
+                }
+                else if(infoDB.getName().equals("KnowledgeDB")){
+                    String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
+                    dao.JsonPasing(jsonData, attribute);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.e("TEST1 AsyncHttpClient","연결실패 status code : " + statusCode);
+                /*
+                Toast.makeText(context,"네트워크 연결이 불안정 합니다. 네트워크 연결을 확인해 주세요.",Toast.LENGTH_LONG);
+
+                int pid = android.os.Process.myPid();
+                android.os.Process.killProcess(pid);
+                */
             }
         });
     }
+    /*
+    public void URLConnectionForKnowledgeData(String URL1, String dbName) {
+
+
+        ahClient.get(subURL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+    }
+    */
 }

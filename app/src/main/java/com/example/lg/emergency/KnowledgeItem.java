@@ -12,16 +12,16 @@ public class KnowledgeItem {
     private int image;
 
 
-public int getImage() { return image;}
+    public int getImage() { return image;}
     public String getTitle() { return title; }
-public String getDate() { return date; }
-public String getSubtitle() { return subtitle; }
+    public String getDate() { return date; }
+    public String getSubtitle() { return subtitle; }
 
-public KnowledgeItem( int image,String title, String date, String subtitle){
+    public KnowledgeItem( int image,String title, String date, String subtitle){
 
         this.image = image;
         this.title = title;
         this.date = date;
         this.subtitle = subtitle;
-        }
-        }
+    }
+}
