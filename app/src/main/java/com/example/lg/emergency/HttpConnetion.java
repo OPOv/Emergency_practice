@@ -3,6 +3,10 @@ package com.example.lg.emergency;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,10 +14,20 @@ import java.net.HttpURLConnection;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+
+/*
+ *   Class HttpConnection
+ *
+ *   1. public HttpConnetion(String _url) : 생성자
+ *   2. public String doInBackground(String... strings) : http 통신 실행
+ *   3. public ArrayList<String> JsonPasing(JSONObject jsonObj, String[] attribute) throws JSONException  : JSON 파싱
+ *   4. public ArrayList<String> Prepare(JSONArray jsonArr, String[] attribute, int i) throws JSONException : JSON 파싱
+ */
 
 public class HttpConnetion extends AsyncTask<String, Void, String>{
 
-    private String str, receiveMsg,_url;
+    private String _url;
 
     public HttpConnetion(String _url) {
         this._url = _url;
@@ -21,7 +35,7 @@ public class HttpConnetion extends AsyncTask<String, Void, String>{
 
     @Override
     protected String doInBackground(String... strings) {
-
+        String str,receiveMsg = "";
         URL url = null;
         try {
             url = new URL(_url);
@@ -66,5 +80,19 @@ public class HttpConnetion extends AsyncTask<String, Void, String>{
         }
 
         return receiveMsg;
+    }
+
+    public ArrayList<String> JsonPasing(JSONObject jsonObj, String[] attribute) throws JSONException {
+        ArrayList<String> arrList = new ArrayList(attribute.length);
+
+        for (int i = 0; i < attribute.length; i++) {
+            arrList.add(jsonObj.getString(attribute[i]));
+        }
+        return arrList;
+    }
+
+    public ArrayList<String> Prepare(JSONArray jsonArr, String[] attribute, int i) throws JSONException {
+        JSONObject jsonObj = jsonArr.getJSONObject(i);
+        return this.JsonPasing(jsonObj, attribute);
     }
 }

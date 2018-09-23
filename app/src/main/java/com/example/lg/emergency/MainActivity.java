@@ -3,6 +3,7 @@ package com.example.lg.emergency;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 
 import android.database.Cursor;
@@ -15,6 +16,11 @@ import android.util.Log;
 import android.view.View;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -24,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     RecyclerView mainRecycler;
 
+    public static final String URL_Server = "http://172.20.10.4:3000/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,52 +40,81 @@ public class MainActivity extends AppCompatActivity {
         InformationDB infoDB[] = new InformationDB[3];
         infoDB[0] = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude test not null, PhoneNum text not null);","(id, Name,Address,Latitude,Longitude,PhoneNum)",
-                 "http://192.168.1.46:3000/HospitalData");
+                 URL_Server+"HospitalData");
         infoDB[1] = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude double not null, Longitude double not null, PhoneNum text not null);","(id, Name,Address,Latitude,Longitude,PhoneNum)",
-                "http://192.168.1.46:3000/ShelterData");
+                URL_Server+"ShelterData");
+        /*
         infoDB[2] = new InformationDB("KnowledgeDB", "(id integer primary key autoincrement, Title text not null, Date text not null, " +
                 "SubTitle text not null, Detail text not null, ImageSrc text not null);","(id,Title,Date,SubTitle,Detail,ImageSrc)",
-                "http://192.168.1.46:3000/KnowledgeData");
+                URL_Server+"KnowledgeData");
+                */
 
-        Dao dao[] = new Dao[3];
-        for(int i =0; i < dao.length; i++) {
-            dao[i] = new Dao(getApplicationContext(), infoDB[i]);
-            dao[i].ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB[i].getName() + infoDB[i].getAttribute());
-        }
+        File dbFile = new File(Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB");
 
-        for(int i =0; i < infoDB.length; i++) {
-            String jsonData = null;
-            try {
-                jsonData = new HttpConnetion(infoDB[i].getURL()).execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+        Dao dao[] = new Dao[2/*infoDB.length*/];
+        if(dbFile.exists()) {
+            Log.d("TEST1 : ", Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB에 db 있음");
+            for (int i = 0; i < 2/*dao.length*/; i++)
+                dao[i] = new Dao(getApplicationContext(), infoDB[i]);
+        } else {
+            for (int i = 0; i < 2/*dao.length*/; i++) {
+                dao[i] = new Dao(getApplicationContext(), infoDB[i]);
+                dao[i].ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB[i].getName() + infoDB[i].getAttribute());
             }
+            for(int i =0; i < 2/*infoDB.length*/; i++) {
+                String jsonData = null;
+                JSONArray jsonArr;
+                JSONObject jsonObj;
+                try {
+                    HttpConnetion httpConn = new HttpConnetion(infoDB[i].getURL());
+                    jsonData = httpConn.execute().get();
+                    jsonArr = new JSONArray(jsonData);
 
-            if(infoDB[i].getName().equals("HospitalDB")) {
-                String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                dao[i].JsonPasing(jsonData, attribute);
-            }
-            else if(infoDB[i].getName().equals("ShelterDB")) {
-                String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                dao[i].JsonPasing(jsonData, attribute);
-            }
+                    if(infoDB[i].getName().equals("HospitalDB")) {
+                        String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
+                        for(int j = 0; j < jsonArr.length(); j++ ) {
+                            ArrayList<String> arrList = httpConn.Prepare(jsonArr,attribute,j);
+
+                            dao[i].ExecuteSQL(MakeSql(attribute,arrList,infoDB[i],j));
+                        }
+                    }
+                    else if(infoDB[i].getName().equals("ShelterDB")) {
+                        String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
+                        for(int j = 0; j < jsonArr.length(); j++ ) {
+                            ArrayList<String> arrList = httpConn.Prepare(jsonArr, attribute,j);
+
+                            dao[i].ExecuteSQL(MakeSql(attribute,arrList,infoDB[i],j));
+                        }
+                    }
+            /*
             else if(infoDB[i].getName().equals("KnowledgeDB")){
                 String[] attribute = {"TITLE", "DATE", "SUBTITLE", "DETAIL", "IMAGESRC"};
-                dao[i].JsonPasing(jsonData, attribute);
+                for(int j = 0; j < jsonArr.length(); j++ ) {
+                    ArrayList<String> arrList = httpConn.Prepare(jsonArr, attribute,j);
+
+                    dao[i].ExecuteSQL(MakeSql(attribute,arrList,infoDB[i],j));
+                }
+            }
+            */
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        /*
-        for(int i =0; i < 2infoDB.length; i++) {
+
+/*
+        for(int i =0; i < 2; i++) {
 
             HttpCommunication httpComm = new HttpCommunication(getApplicationContext());
-            httpComm.URLConnectionForAPI(infoDB[i]);
+            httpComm.URLConnectionForAPI(dao[i],infoDB[i]);
         }
-        */
-
+*/
         mContext = this;
 
         mainRecycler = findViewById(R.id.recycler_main);
@@ -87,12 +124,6 @@ public class MainActivity extends AppCompatActivity {
         mainRecycler.setLayoutManager(layoutManager);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 2);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-
-
-
-
-
 
         List<KnowledgeItem> items = new ArrayList<>();
         // 나중에 갯수 받아와서 크기 조절하는 걸로 수정 필요
@@ -149,55 +180,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-/*
-    public class HttpAsyncTask extends AsyncTask<Void, Void, String>
+
+    public String MakeSql(String[] attribute,ArrayList<String> arrList,InformationDB infoDB,int j)
     {
-        InformationDB infoDB;
-        Context context;
+        String val = "";
+        for(int c = 0; c < attribute.length; c++)
+            val +=  ", '" + arrList.get(c) + "'";
+        String sql = "INSERT INTO " + infoDB.getName() + infoDB.getAttribute1()
+                + " VALUES(" + j + val + ");";
 
-        public HttpAsyncTask(InformationDB infoDB, Context context) {
-            this.infoDB = infoDB;
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String result;
-
-            HttpConnetion httpConn = new HttpConnetion();
-            result = httpConn.request(infoDB.getURL());
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Dao dao = new Dao(context, infoDB);
-            dao.ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB.getName() + infoDB.getAttribute());
-
-            if(infoDB.getName().equals("HospitalDB")) {
-                String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                dao.JsonPasing(s, attribute);
-            }
-            else if(infoDB.getName().equals("ShelterDB")) {
-                String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
-                dao.JsonPasing(s, attribute);
-            }
-            else if(infoDB.getName().equals("KnowledgeDB")) {
-                String[] attribute = {"TITLE", "DATE", "SUBTITLE", "DETAIL", "IMAGESRC"};
-                dao.JsonPasing(s, attribute);
-                super.onPostExecute(s);
-            }
-
-
-        }
+        return sql;
     }
-*/
+
     public void shelter_btn(View view) { //go to shelter class
 
         Intent Myintent = new Intent(getApplicationContext(), ShelterActivity.class);
@@ -211,6 +205,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Myintent);
 
     }
-
-
 }
