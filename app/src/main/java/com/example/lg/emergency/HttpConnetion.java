@@ -54,8 +54,6 @@ public class HttpConnetion extends AsyncTask<String, Void, String>{
                         buffer.append(str);
                     }
                     receiveMsg = buffer.toString();
-                    Log.i("receiveMsg : ", receiveMsg);
-
                     reader.close();
                 } else {
                     Log.i("통신 결과", conn.getResponseCode() + "에러");

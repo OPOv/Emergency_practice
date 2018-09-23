@@ -31,14 +31,11 @@ public class HttpCommunication  {
         ahClient = new AsyncHttpClient();
     }
 
-    public void URLConnectionForAPI(final InformationDB infoDB) {
+    public void URLConnectionForAPI(final Dao dao, final InformationDB infoDB) {
         ahClient.get(infoDB.getURL(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String jsonData = new String(responseBody);
-
-                Dao dao = new Dao(context, infoDB);
-                dao.ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB.getName() + infoDB.getAttribute());
 
                 if(infoDB.getName().equals("HospitalDB")) {
                     String[] attribute = {"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
@@ -48,10 +45,12 @@ public class HttpCommunication  {
                     String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
                     dao.JsonPasing(jsonData, attribute);
                 }
+                /*
                 else if(infoDB.getName().equals("KnowledgeDB")){
                     String[] attribute = {"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"};
                     dao.JsonPasing(jsonData, attribute);
                 }
+                */
             }
 
             @Override
@@ -65,22 +64,4 @@ public class HttpCommunication  {
             }
         });
     }
-    /*
-    public void URLConnectionForKnowledgeData(String URL1, String dbName) {
-
-
-        ahClient.get(subURL, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-
-    }
-    */
 }

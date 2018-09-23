@@ -54,38 +54,6 @@ public class Dao {
             Log.e("TEST1 JSON PARSE", "JSON ERROR! -" + e);
         }
     }
-/*
-    public void CreateKnowledgeData()
-    {
-        List<KnowledgeItem> items = new ArrayList<>();
-
-        // 차후 수정예정
-        KnowledgeItem[] item = new KnowledgeItem[9];
-        item[0] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변"," "," ");
-        item[1] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병"," "," ");
-        item[2] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변"," "," ");
-        item[3] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변"," "," ");
-        item[4] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병"," "," ");
-        item[5] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변"," "," ");
-        item[6] = new KnowledgeItem("심폐소생술 실습", "2017/10/5", "천재지변"," "," ");
-        item[7] = new KnowledgeItem("ADV 사용 방법", "2018/05/17", "질병"," "," ");
-        item[8] = new KnowledgeItem("지진발생시 대피요령", "2016/05/16", "천재지변"," "," ");
-
-        for(int i = 0; i < item.length; i++)
-            items.add(item[i]);
-
-        for(int i = 0; i<items.size();i++) {
-
-            String sql = "INSERT INTO " + infoDB.getName() + infoDB.getAttribute1()
-                    + "VALUES(" + i + ", '" + items.get(i).getTitle() + "', '" + items.get(i).getDate()
-                    + "', '" + items.get(i).getSubtitle() + "', '" + items.get(i).getDetail()
-                    + "', '" + items.get(i).getImagesrc() + "');";
-
-            ExecuteSQL(sql);
-        }
-
-    }
-    */
 
     public void ExecuteSQL(String sql)
     {
@@ -99,27 +67,11 @@ public class Dao {
 
     public Cursor getDB( String sql)
     {
-        //String sql = "SELECT * FROM " + infoDB.getName() + " WHERE " + columnName + " LIKE "
-        //                                                + "\'" + searchData + "\';";
-
         Cursor cursor = database.rawQuery(sql, null);
         if(cursor.getCount() == 0)
             Log.d("TEST CURSOR", "찾지못함");
 
         return cursor;
-/*
-        if(cursor.getCount() == 0)
-            Log.d("TEST CURSOR", "찾지못함");
-
-
-        while ( cursor.moveToNext())
-        {
-
-        }
-        cursor.close();
-
-        return new ArrayList<>();
- */
     }
 
 }
