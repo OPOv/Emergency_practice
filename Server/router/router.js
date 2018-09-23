@@ -39,4 +39,21 @@ module.exports = function(app, fs)
       res.status(200).json(jsondata.DATA);
     })//end readFile()
   })//end app.get()
+
+  app.get('/DetailData', function(req,res){
+    fs.readFile(__dirname + "/../data/DetailData.json",'utf8',function(err,data){
+      var jsondata = JSON.parse(data);
+
+      res.status(200).json(jsondata.DETAIL_DATA);
+    })//end readFile()
+  })//end app.get()
+
+  app.get('/DetailData/img/:IMGSRC', function(req,res){
+    fs.readFile(__dirname + "/../img/"+req.params.IMGSRC,function(err,data){
+
+      res.writeHead(200, { "Context-Type": "image/jpg" });
+      res.write(data);
+      res.end();
+    })//end readFile()
+  })//end app.get()
 }
