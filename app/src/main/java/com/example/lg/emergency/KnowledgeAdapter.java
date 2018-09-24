@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 
@@ -25,15 +27,16 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<KnowledgeItem> items;
+    private URLClass _url;
 
 
     private final int HEADER = -1;
     private final int BODY = 0;
 
-    public KnowledgeAdapter(Context mContext, List<KnowledgeItem> items){
+    public KnowledgeAdapter(Context mContext, List<KnowledgeItem> items, URLClass _url){
         this.mContext = mContext;
         this.items = items;
-
+        this._url = _url;
     }
 
     @Override
@@ -64,7 +67,8 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
             final KnowledgeItem item = items.get(position - 1);
 
 //            Drawable drawable=mContext.getResources().getDrawable(item.getImage());
-            ((KnowledgeViewHolder)viewHolder).imgImage.setImageResource(item.getImage());
+            //((KnowledgeViewHolder)viewHolder).imgImage.setImageResource(item.getImage());
+            Glide.with(mContext).load(_url.getURL() + item.getImage()).into(((KnowledgeViewHolder)viewHolder).imgImage);
             ((KnowledgeViewHolder)viewHolder).txtTitle.setText(item.getTitle());
             ((KnowledgeViewHolder)viewHolder).txtDate.setText(item.getDate());
             ((KnowledgeViewHolder)viewHolder).txtCont.setText(item.getSubtitle());
