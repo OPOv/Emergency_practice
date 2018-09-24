@@ -4,14 +4,14 @@ public class InformationDB {
     String name;
     String attribute;
     String attribute1;
-    String URL;
+    URLClass URL;
 
-    public String getURL() { return URL; }
+    public String getURL() { return URL.getURL(); }
     public String getName() { return name; }
     public String getAttribute() { return attribute; }
     public String getAttribute1() { return attribute1; }
 
-    public InformationDB(String name, String attribute, String attribute1, String URL) {
+    public InformationDB(String name, String attribute, String attribute1, URLClass URL) {
         this.name = name;
         this.attribute = attribute;
         this.attribute1 = attribute1;
