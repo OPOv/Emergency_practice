@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     RecyclerView mainRecycler;
 
-    public static final String URL_Server = "http://192.168.0.12:3000/";
+    public static final String URL_Server = "yourServerIP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
