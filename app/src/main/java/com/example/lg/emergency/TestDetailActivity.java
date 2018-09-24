@@ -39,7 +39,7 @@ public class TestDetailActivity extends AppCompatActivity {
         img[4] = (ImageView)findViewById(R.id.imageView4);
 
         //HttpConnection Class 생성자 호출(_url : 연결 할 서버 주소)
-        HttpConnetion httpConn = new HttpConnetion(MainActivity.URL_Server + "DetailData");
+        HttpConnetion httpConn = new HttpConnetion(new URLClass(MainActivity.URL_Server + "DetailData"));
 
         String jsonData;
         try {
@@ -58,7 +58,7 @@ public class TestDetailActivity extends AppCompatActivity {
                  * JSONArray 의 j번째 값을 파싱해서 ArrayList에 담음
                  * {"TEXT1", "TEXT2","TEXT3", "TEXT4","TEXT5", "IMAGE1","IMAGE2", "IMAGE3","IMAGE4", "IMAGE5"}는 찾을 키값
                  */
-                ArrayList<String> arrList = httpConn.Prepare(jsonArr,
+                ArrayList<String> arrList = httpConn.GetJsonReturnArrayList(jsonArr,
                         new String[]{"TEXT1", "TEXT2","TEXT3", "TEXT4","TEXT5", "IMAGE1","IMAGE2", "IMAGE3","IMAGE4", "IMAGE5"},j);
 
                 /*
