@@ -74,27 +74,6 @@ public class MainActivity extends AppCompatActivity {
             StartHttpConnect(infoDB,dao);
         }
 
-/*
-        for(int i =0; i < 2; i++) {
-
-            HttpCommunication httpComm = new HttpCommunication(getApplicationContext());
-            httpComm.URLConnectionForAPI(dao[i],infoDB[i]);
-        }
-
-        // 나중에 갯수 받아와서 크기 조절하는 걸로 수정 필요
-        final KnowledgeItem[] item = new KnowledgeItem[9];
-        item[0] = new KnowledgeItem(R.drawable.forest, "심폐소생술 실습", "September 21, 2018", "천재지변");
-        item[1] = new KnowledgeItem(R.drawable.safari, "ADV 사용 방법", "September 21, 2018", "질병");
-        item[2] = new KnowledgeItem(R.drawable.snow, "지진발생 대피요령", "September 21, 2018", "천재지변");
-        item[3] = new KnowledgeItem(R.drawable.test, "심폐소생술 실습", "September 21, 2018", "천재지변");
-        item[4] = new KnowledgeItem(R.drawable.forest, "ADV 사용 방법", "September 21, 2018", "질병");
-        item[5] = new KnowledgeItem(R.drawable.safari, "지진발생시 대피요령", "September 21, 2018", "천재지변");
-        item[6] = new KnowledgeItem(R.drawable.snow, "심폐소생술 실습", "September 21, 2018", "천재지변");
-        item[7] = new KnowledgeItem(R.drawable.test, "ADV 사용 방법", "September 21, 2018", "질병");
-        item[8] = new KnowledgeItem(R.drawable.forest, "지진발생 대피요령", "September 21, 2018", "천재지변");
-
-*/
-
         mContext = this;
 
         mainRecycler = findViewById(R.id.recycler_main);
