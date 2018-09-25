@@ -55,34 +55,24 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TEST1 : ", Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB에 db 있음");
             for (int i = 0; i < dao.length; i++)
                 dao[i] = new Dao(getApplicationContext(), infoDB[i]);
+
+            //Test DB status
+            Cursor cursor[]= new Cursor[infoDB.length];
+            for(int i =0; i < infoDB.length; i++) {
+                cursor[i] = dao[i].getDB("SELECT * FROM " + infoDB[i].getName() + " LIMIT 1,10");
+                Log.d("TEST 1 : ", " getCount : " + cursor[i].getCount());
+            }
+            if(cursor[0].getCount() == 0 || cursor[1].getCount() == 0 || cursor[2].getCount() == 0)
+                StartHttpConnect(infoDB,dao);
+
         } else {
             for (int i = 0; i < dao.length; i++) {
                 dao[i] = new Dao(getApplicationContext(), infoDB[i]);
                 dao[i].ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB[i].getName() + infoDB[i].getAttribute());
             }
             // Starting httpConnection
-
-            String jsonData = null;
-            JSONArray jsonArr;
-
-            try {
-                HttpConnetion httpConn = new HttpConnetion(infoDB[2],dao[2],MainActivity.this);
-                jsonData = httpConn.execute().get();
-                jsonArr = new JSONArray(jsonData);
-
-                httpConn.GetJsonAndExecuteSQL(jsonArr,new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
-                for (int i = 0; i < infoDB.length - 1; i++) {
-                    httpConn = new HttpConnetion(infoDB[i],dao[i],MainActivity.this);
-                    httpConn.execute();
-                }
-
-            }catch (InterruptedException | JSONException | ExecutionException e) {
-                ExceptionHandling exceptHandling = new ExceptionHandling(e,MainActivity.this,"초기 설정중 문제가 발생했습니다. \n지속적으로 문제 발생 시 어플리케이션 개발자에게 문의하십시오.");
-                exceptHandling.StartingExceptionDialog();
-                e.printStackTrace();
-            }
+            StartHttpConnect(infoDB,dao);
         }
-
 
 /*
         for(int i =0; i < 2; i++) {
@@ -120,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = dao[2].getDB("SELECT * FROM KnowledgeDB");
 
-        if(cursor.getCount() != -1) {
+        if(cursor.getCount() != 0) {
             KnowledgeItem[] item = new KnowledgeItem[cursor.getCount()];
             int count = 0;
 
@@ -155,6 +145,28 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        }
+    }
+
+    public void StartHttpConnect(InformationDB[] infoDB,Dao[] dao){
+        String jsonData = null;
+        JSONArray jsonArr;
+
+        try {
+            HttpConnetion httpConn = new HttpConnetion(infoDB[2],dao[2],MainActivity.this);
+            jsonData = httpConn.execute().get();
+            jsonArr = new JSONArray(jsonData);
+
+            httpConn.GetJsonAndExecuteSQL(jsonArr,new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
+            for (int i = 0; i < infoDB.length - 1; i++) {
+                httpConn = new HttpConnetion(infoDB[i],dao[i],MainActivity.this);
+                httpConn.execute();
+            }
+
+        }catch (InterruptedException | JSONException | ExecutionException e) {
+            ExceptionHandling exceptHandling = new ExceptionHandling(e,MainActivity.this,"초기 설정중 문제가 발생했습니다. \n지속적으로 문제 발생 시 어플리케이션 개발자에게 문의하십시오.");
+            exceptHandling.StartingExceptionDialog();
+            e.printStackTrace();
         }
     }
 
