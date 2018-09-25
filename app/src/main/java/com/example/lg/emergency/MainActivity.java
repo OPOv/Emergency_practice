@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     RecyclerView mainRecycler;
 
-    public static final String URL_Server = "yourServerIP";
+    public static final String URL_Server = "http://35.221.115.152:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,24 +66,19 @@ public class MainActivity extends AppCompatActivity {
             JSONArray jsonArr;
 
             try {
-                HttpConnetion httpConn = new HttpConnetion(infoDB[2],dao[2]);
+                HttpConnetion httpConn = new HttpConnetion(infoDB[2],dao[2],MainActivity.this);
                 jsonData = httpConn.execute().get();
                 jsonArr = new JSONArray(jsonData);
 
                 httpConn.GetJsonAndExecuteSQL(jsonArr,new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
-                Log.d("TEST 1 : ", " KnowledgeDB 생성 완료");
                 for (int i = 0; i < infoDB.length - 1; i++) {
-                    Log.d("TEST 1 : ", " DB 생성 시작");
-                    httpConn = new HttpConnetion(infoDB[i],dao[i]);
+                    httpConn = new HttpConnetion(infoDB[i],dao[i],MainActivity.this);
                     httpConn.execute();
-                    Log.d("TEST 1 : ", " DB 생성 완료");
                 }
 
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            }catch (InterruptedException | JSONException | ExecutionException e) {
+                ExceptionHandling exceptHandling = new ExceptionHandling(e,MainActivity.this,"초기 설정중 문제가 발생했습니다. \n지속적으로 문제 발생 시 어플리케이션 개발자에게 문의하십시오.");
+                exceptHandling.StartingExceptionDialog();
                 e.printStackTrace();
             }
         }
@@ -124,29 +119,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         Cursor cursor = dao[2].getDB("SELECT * FROM KnowledgeDB");
-        KnowledgeItem[] item = new KnowledgeItem[cursor.getCount()];
 
-         cursor.moveToFirst();
+        if(cursor.getCount() != -1) {
+            KnowledgeItem[] item = new KnowledgeItem[cursor.getCount()];
+            int count = 0;
 
-         int count = 0;
-
-        if(cursor != null) {
+            cursor.moveToFirst();
             do {
                 item[count++] = new KnowledgeItem(cursor.getString(cursor.getColumnIndex("ImageSrc")), cursor.getString(cursor.getColumnIndex("Title")),
-                                cursor.getString(cursor.getColumnIndex("Date")), cursor.getString(cursor.getColumnIndex("SubTitle")));
-            }while(cursor.moveToNext());
-        }
+                        cursor.getString(cursor.getColumnIndex("Date")), cursor.getString(cursor.getColumnIndex("SubTitle")));
+            } while (cursor.moveToNext());
 
 
-        for (int i = 0; i < item.length; i++)
-            items.add(item[i]);
+            for (int i = 0; i < item.length; i++)
+                items.add(item[i]);
 
-        mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items, new URLClass(URL_Server + "DetailData/img/")));
+            mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items, new URLClass(URL_Server + "DetailData/img/")));
 
-        ItemClickSupport.addTo(mainRecycler).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            ItemClickSupport.addTo(mainRecycler).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
 
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                @Override
+                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
 /*
                 Intent intent = new Intent(getApplicationContext(), KnowledgeDataActivity.class);
@@ -160,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 */
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
     public void shelter_btn(View view) { //go to shelter class

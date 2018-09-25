@@ -1,8 +1,10 @@
 package com.example.lg.emergency;
 
 import android.content.Context;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import android.util.Log;
 
 /*
@@ -25,21 +27,13 @@ public class Dao {
         database = context.openOrCreateDatabase(infoDB.getName(), context.MODE_PRIVATE, null);
     }
 
-    public void ExecuteSQL(String sql)
-    {
-        try {
-            database.execSQL(sql);
-            //Log.d("TEST1 DB INSERT","입력완료");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void ExecuteSQL(String sql) {
+        database.execSQL(sql);
     }
 
     public Cursor getDB( String sql)
     {
         Cursor cursor = database.rawQuery(sql, null);
-        if(cursor.getCount() == 0)
-            Log.d("TEST CURSOR", "찾지못함");
 
         return cursor;
     }

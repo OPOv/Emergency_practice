@@ -1,5 +1,6 @@
 package com.example.lg.emergency;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -29,10 +29,13 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
 
     private InformationDB infoDB;
     private Dao dao;
+    private Context context;
+    private Exception e;
 
-    public HttpConnetion(InformationDB infoDB, Dao dao) {
+    public HttpConnetion(InformationDB infoDB, Dao dao,Context context) {
         this.infoDB = infoDB;
         this.dao = dao;
+        this.context = context;
     }
 
     public HttpConnetion(URLClass _url)
@@ -80,10 +83,9 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
                     Log.i("통신 결과", conn.getResponseCode() + "에러");
                 }
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            //인터넷 연결 실패에 대한 exception 추가
+            this.e = e;
         }
 
         return receiveMsg;
@@ -91,17 +93,24 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String jsonData) {
-        if(infoDB.getName().equals("HospitalDB") || infoDB.getName().equals("ShelterDB")) {
-            JSONArray jsonArr = null;
-            try {
-                jsonArr = new JSONArray(jsonData);
+        if(e != null){
+            ExceptionHandling exceptHandling = new ExceptionHandling(e,context,"인터넷 연결이 불안정 합니다. \n인터넷 연결 상태를 확인 후 어플리케이션을 재실행 하십시오.");
+            exceptHandling.StartingExceptionDialog();
+        }
+        else {
+            if (infoDB.getName().equals("HospitalDB") || infoDB.getName().equals("ShelterDB")) {
+                JSONArray jsonArr = null;
+                try {
+                    jsonArr = new JSONArray(jsonData);
 
-                if (infoDB.getName().equals("HospitalDB"))
-                    this.GetJsonAndExecuteSQL(jsonArr, new String[]{"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
-                else if (infoDB.getName().equals("ShelterDB"))
-                    this.GetJsonAndExecuteSQL(jsonArr, new String[]{"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    if (infoDB.getName().equals("HospitalDB"))
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
+                    else if (infoDB.getName().equals("ShelterDB"))
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
+                } catch (JSONException e) {
+                    ExceptionHandling exceptHandling = new ExceptionHandling(e,context,"초기 설정 중 문제가 발생했습니다. \n지속적으로 문제발생시 어플리케이션 개발자에게 문의하십시오");
+                    exceptHandling.StartingExceptionDialog();
+                }
             }
         }
 
@@ -109,7 +118,7 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
     }
 
     public ArrayList<String> JsonParsing(JSONObject jsonObj, String[] attribute) throws JSONException {
-        ArrayList<String> arrList = new ArrayList(attribute.length);
+        ArrayList<String> arrList = new ArrayList<>(attribute.length);
 
         for (int i = 0; i < attribute.length; i++) {
             arrList.add(jsonObj.getString(attribute[i]));
