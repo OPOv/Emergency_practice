@@ -1,5 +1,7 @@
 package com.example.lg.emergency;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -31,16 +33,28 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
     private Dao dao;
     private Context context;
     private Exception e;
+    private ProgressDialog progressDialog;
 
     public HttpConnetion(InformationDB infoDB, Dao dao,Context context) {
         this.infoDB = infoDB;
         this.dao = dao;
         this.context = context;
+        progressDialog = new ProgressDialog((Activity)context);
     }
 
     public HttpConnetion(URLClass _url)
     {
         this.infoDB = new InformationDB("","","",_url);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if(infoDB.getName().equals("HospitalDB")) {
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("초기 설정중입니다. 잠시만 기다려주세요...");
+            progressDialog.show();
+        }
+        super.onPreExecute();
     }
 
     @Override
@@ -111,6 +125,8 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
                     ExceptionHandling exceptHandling = new ExceptionHandling(e,context,"초기 설정 중 문제가 발생했습니다. \n지속적으로 문제발생시 어플리케이션 개발자에게 문의하십시오");
                     exceptHandling.StartingExceptionDialog();
                 }
+                if(infoDB.getName().equals("HospitalDB"))
+                    progressDialog.dismiss();
             }
         }
 
