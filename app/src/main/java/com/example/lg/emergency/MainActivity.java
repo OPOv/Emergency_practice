@@ -81,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mainRecycler.setHasFixedSize(true);
         mainRecycler.setLayoutManager(layoutManager);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 2);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
 
         List<KnowledgeItem> items = new ArrayList<>();
 

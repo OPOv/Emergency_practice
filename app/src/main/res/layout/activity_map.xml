@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_map"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
@@ -9,12 +10,101 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     tools:context="com.example.lg.emergency.DMapView">
-    <RelativeLayout
+
+    <net.daum.mf.map.api.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent"/>
 
-    </RelativeLayout>
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_more"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp"
+        app:elevation="5dp"
+        app:pressedTranslationZ="5dp"
+        android:src="@drawable/ic_more_w"
+        app:backgroundTint="@color/colorOrange"/>
+
+    <FrameLayout
+        android:id="@+id/layout_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:visibility="gone"
+        android:elevation="6dp">
+        <View
+            android:id="@+id/background_more"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_exit"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            app:elevation="5dp"
+            app:pressedTranslationZ="5dp"
+            android:src="@drawable/ic_exit_k"
+            app:backgroundTint="@color/colorWhite" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_location"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="100dp"
+            app:elevation="5dp"
+            app:pressedTranslationZ="5dp"
+            android:src="@drawable/ic_location"
+            app:backgroundTint="@color/colorOrange" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_hospital"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="180dp"
+            app:elevation="5dp"
+            app:pressedTranslationZ="5dp"
+            android:src="@drawable/ic_hospital_w"
+            app:backgroundTint="@color/colorOrange" />
+
+    </FrameLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal"
+        android:id="@+id/action_bar"
+        android:background="@color/colorOrange"
+        android:elevation="12dp">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_back_arrow_w"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorWhite"
+            android:text="병원"
+            android:layout_marginLeft="15dp"
+            android:elevation="10dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>
