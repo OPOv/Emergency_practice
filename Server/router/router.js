@@ -48,12 +48,12 @@ module.exports = function(app, fs)
     })//end readFile()
   })//end app.get()
 
-  app.get('/DetailData/img/:IMGSRC', function(req,res){
-    fs.readFile(__dirname + "/../img/recyclerview/"+req.params.IMGSRC,function(err,data){
-
+  app.get('/img/:VIEWDIR/:IMGSRC', function(req,res){
+    fs.readFile(__dirname + "/../img/"+ req.params.VIEWDIR + "/" + req.params.IMGSRC,function(err,data){
       res.writeHead(200, { "Context-Type": "image/jpg" });
       res.write(data);
       res.end();
+
     })//end readFile()
   })//end app.get()
 }
