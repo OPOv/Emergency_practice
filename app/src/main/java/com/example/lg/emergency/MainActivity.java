@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < item.length; i++)
                 items.add(item[i]);
 
-            mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items, new URLClass(URL_Server + "img/recyclerview")));
+            mainRecycler.setAdapter(new KnowledgeAdapter(mContext, items, new URLClass(URL_Server + "img/recyclerview/")));
 
             ItemClickSupport.addTo(mainRecycler).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
 
