@@ -4,65 +4,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="302dp"
+        android:layout_height="340dp"
 
+
+        android:background="@color/colorOrange"
         tools:ignore="MissingConstraints"
-
-        >
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <ImageButton
             android:id="@+id/btn_shelter"
-            android:layout_width="134dp"
-            android:layout_height="125dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
 
 
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="70dp"
-            android:layout_marginLeft="36dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginLeft="45dp"
             android:background="@color/colorWhite"
             android:onClick="shelter_btn"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/shelter2" />
+            app:srcCompat="@drawable/circle_sh" />
 
 
         <ImageButton
             android:id="@+id/btn_hospital"
-            android:layout_width="134dp"
-            android:layout_height="125dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
 
 
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/btn_shelter"
-            android:layout_marginRight="36dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginRight="45dp"
             android:background="@color/colorWhite"
+
             android:onClick="hospital_btn"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/hospital2" />
+            app:srcCompat="@drawable/circle_hos" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="142dp"
-            android:layout_height="40dp"
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="52dp"
-            android:layout_marginTop="16dp"
-            app:srcCompat="@drawable/app_logo_text" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/colorWhite"
+            android:fontFamily="@font/jua"
+            android:gravity="center"
+            android:text="위급이"
+            android:textColor="#4c4c4c"
+            android:textSize="25dp" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="43dp"
-            android:layout_height="37dp"
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/imageView2"
-            android:layout_marginStart="38dp"
-            app:srcCompat="@drawable/app_logo_image" />
+            android:layout_marginBottom="74dp"
+            android:layout_marginStart="73dp"
+            android:fontFamily="@font/jua"
+            android:text="대피소 위치"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp" />
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textView7"
+            android:layout_marginEnd="78dp"
+            android:fontFamily="@font/jua"
+            android:text="병원위치"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="47dp"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/colorWhite"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/navigation" />
 
     </RelativeLayout>
 

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
     android:background="@color/colorWhite"
-    android:orientation="vertical">
+   >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
     <android.support.v7.widget.CardView
@@ -75,10 +81,96 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="10dp"
+        >
 
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/content_text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:gravity="center"
+                android:fontFamily="@font/sangmon"/>
+
+
+            <ImageView
+                android:id="@+id/content_image1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/forest"
+                android:scaleType="fitXY"
+                android:layout_margin="5dp"
+                />
+
+            <TextView
+                android:id="@+id/content_text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:gravity="center"
+                android:fontFamily="@font/sangmon"/>
+
+
+            <ImageView
+                android:id="@+id/content_image2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/forest"
+                android:scaleType="fitXY"
+                android:layout_margin="5dp"
+                />
+
+            <TextView
+                android:id="@+id/content_text3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:gravity="center"
+                android:fontFamily="@font/sangmon"/>
+
+
+            <ImageView
+                android:id="@+id/content_image3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/forest"
+                android:scaleType="fitXY"
+                android:layout_margin="5dp"
+                />
+
+            <TextView
+                android:id="@+id/content_text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:gravity="center"
+                android:fontFamily="@font/sangmon"/>
+
+
+            <ImageView
+                android:id="@+id/content_image4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/forest"
+                android:scaleType="fitXY"
+                android:layout_margin="5dp"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

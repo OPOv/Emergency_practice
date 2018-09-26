@@ -26,8 +26,10 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
+    public final int Max_item = 6;
     Context mContext;
     RecyclerView mainRecycler;
+    KnowledgeItem[] item = new KnowledgeItem[Max_item];
 
     public static final String URL_Server = "http://35.221.115.152:3000/";
 
@@ -39,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         InformationDB infoDB[] = new InformationDB[3];
         infoDB[0] = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude test not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
-                new URLClass(URL_Server+ "HospitalData"));
+                new URLClass(URL_Server + "HospitalData"));
         infoDB[1] = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude double not null, Longitude double not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "ShelterData"));
 
         infoDB[2] = new InformationDB("KnowledgeDB", "(id integer primary key autoincrement, Title text not null, Date text not null, " +
-                "SubTitle text not null,  ImageSrc text not null);","(id,Title,Date,SubTitle,ImageSrc)",
-                new URLClass(URL_Server+"KnowledgeData"));
+                "SubTitle text not null,  ImageSrc text not null);", "(id,Title,Date,SubTitle,ImageSrc)",
+                new URLClass(URL_Server + "KnowledgeData"));
 
         File dbFile = new File(Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB");
 
@@ -57,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 dao[i] = new Dao(getApplicationContext(), infoDB[i]);
 
             //Test DB status
-            Cursor cursor[]= new Cursor[infoDB.length];
-            for(int i =0; i < infoDB.length; i++) {
+            Cursor cursor[] = new Cursor[infoDB.length];
+            for (int i = 0; i < infoDB.length; i++) {
                 cursor[i] = dao[i].getDB("SELECT * FROM " + infoDB[i].getName() + " LIMIT 1,10");
                 Log.d("TEST 1 : ", " getCount : " + cursor[i].getCount());
             }
-            if(cursor[0].getCount() == 0 || cursor[1].getCount() == 0 || cursor[2].getCount() == 0)
-                StartHttpConnect(infoDB,dao);
+            if (cursor[0].getCount() == 0 || cursor[1].getCount() == 0 || cursor[2].getCount() == 0)
+                StartHttpConnect(infoDB, dao);
 
         } else {
             for (int i = 0; i < dao.length; i++) {
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 dao[i].ExecuteSQL("CREATE TABLE IF NOT EXISTS " + infoDB[i].getName() + infoDB[i].getAttribute());
             }
             // Starting httpConnection
-            StartHttpConnect(infoDB,dao);
+            StartHttpConnect(infoDB, dao);
         }
 
         mContext = this;
@@ -91,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = dao[2].getDB("SELECT * FROM KnowledgeDB");
 
-        if(cursor.getCount() != 0) {
-            KnowledgeItem[] item = new KnowledgeItem[cursor.getCount()];
+        if (cursor.getCount() != 0) {
             int count = 0;
 
             cursor.moveToFirst();
@@ -112,40 +113,40 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-/*
-                Intent intent = new Intent(getApplicationContext(), KnowledgeDataActivity.class);
+                    if (position > 1) {
+                        Intent intent = new Intent(getApplicationContext(), KnowledgeDataActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("image", item[position - 2].getImage());
+                        intent.putExtra("title", item[position - 2].getTitle());
+                        intent.putExtra("day", item[position - 2].getDate());
+                        intent.putExtra("subject", item[position - 2].getSubtitle());
 
-                intent.putExtra("image", Integer.toString(item[position - 1].getImage()));
-                intent.putExtra("title", item[position - 1].getTitle());
-                intent.putExtra("day", item[position - 1].getDate());
-                intent.putExtra("subject", item[position - 1].getSubtitle());
 
+                        startActivity(intent);
 
-                startActivity(intent);
-                */
-
+                    }
                 }
             });
         }
     }
 
-    public void StartHttpConnect(InformationDB[] infoDB,Dao[] dao){
+    public void StartHttpConnect(InformationDB[] infoDB, Dao[] dao) {
         String jsonData = null;
         JSONArray jsonArr;
 
         try {
-            HttpConnetion httpConn = new HttpConnetion(infoDB[2],dao[2],MainActivity.this);
+            HttpConnetion httpConn = new HttpConnetion(infoDB[2], dao[2], MainActivity.this);
             jsonData = httpConn.execute().get();
             jsonArr = new JSONArray(jsonData);
 
-            httpConn.GetJsonAndExecuteSQL(jsonArr,new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
+            httpConn.GetJsonAndExecuteSQL(jsonArr, new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
             for (int i = 0; i < infoDB.length - 1; i++) {
-                httpConn = new HttpConnetion(infoDB[i],dao[i],MainActivity.this);
+                httpConn = new HttpConnetion(infoDB[i], dao[i], MainActivity.this);
                 httpConn.execute();
             }
 
-        }catch (InterruptedException | JSONException | ExecutionException e) {
-            ExceptionHandling exceptHandling = new ExceptionHandling(e,MainActivity.this,"초기 설정중 문제가 발생했습니다. \n지속적으로 문제 발생 시 어플리케이션 개발자에게 문의하십시오.");
+        } catch (InterruptedException | JSONException | ExecutionException e) {
+            ExceptionHandling exceptHandling = new ExceptionHandling(e, MainActivity.this, "초기 설정중 문제가 발생했습니다. \n지속적으로 문제 발생 시 어플리케이션 개발자에게 문의하십시오.");
             exceptHandling.StartingExceptionDialog();
             e.printStackTrace();
         }

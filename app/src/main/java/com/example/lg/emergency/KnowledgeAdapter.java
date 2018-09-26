@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -30,7 +31,8 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
     private URLClass _url;
 
 
-    private final int HEADER = -1;
+    private final int HEADER = -2;
+    private final int MIDDLE = -1;
     private final int BODY = 0;
 
     public KnowledgeAdapter(Context mContext, List<KnowledgeItem> items, URLClass _url){
@@ -44,8 +46,11 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
         if(position == 0)
             return HEADER;
+        else if (position ==1 )
+            return MIDDLE;
         else
             return BODY;
+
     }
 
     @Override
@@ -53,7 +58,13 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
         if(viewType == HEADER){
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_main_top, null);
             return new KnowledgeHeader(v);
-        } else {
+        }
+        else if (viewType == MIDDLE)
+        {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_main_middle, null);
+            return new KnowledgeMiddle(v);
+        }
+        else {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_knowledge, null);
             return new KnowledgeViewHolder(v);
         }
@@ -64,7 +75,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         if(viewHolder instanceof KnowledgeViewHolder) {
-            final KnowledgeItem item = items.get(position - 1);
+            final KnowledgeItem item = items.get(position - 2);
 
 //            Drawable drawable=mContext.getResources().getDrawable(item.getImage());
             //((KnowledgeViewHolder)viewHolder).imgImage.setImageResource(item.getImage());
@@ -72,7 +83,9 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
             ((KnowledgeViewHolder)viewHolder).txtTitle.setText(item.getTitle());
             ((KnowledgeViewHolder)viewHolder).txtDate.setText(item.getDate());
             ((KnowledgeViewHolder)viewHolder).txtCont.setText(item.getSubtitle());
-        } else{
+        }
+
+        else if(viewHolder instanceof KnowledgeHeader){
             ((KnowledgeHeader)viewHolder).btnShelter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,6 +104,10 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
             });
         }
 
+        else{
+
+        }
+
     }
 
     @Override
@@ -105,6 +122,17 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
             super(itemView);
             btnHospital = itemView.findViewById(R.id.btn_hospital);
             btnShelter = itemView.findViewById(R.id.btn_shelter);
+        }
+    }
+
+
+    class KnowledgeMiddle extends RecyclerView.ViewHolder{
+        ImageButton btnShelter, btnHospital;
+        TextView textView;
+        public KnowledgeMiddle(View itemView) {
+            super(itemView);
+
+
         }
     }
 
