@@ -14,70 +14,21 @@
         android:orientation="vertical">
 
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        card_view:cardCornerRadius="10dp"
-        android:layout_margin ="5dp">
+        <TextView
+            android:id="@+id/detail_name"
+            android:layout_width="380dp"
+            android:layout_height="45dp"
+            android:layout_alignBottom="@+id/detail_image"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/shadow"
+            android:gravity="center"
+            android:text="TextView"
+            android:fontFamily="@font/sangmon"
+            android:textColor="#4c4c4c"
+            android:textSize="20dp"
 
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="169dp"
-                android:scaleType="fitXY"
-              />
-
-            <TextView
-                android:id="@+id/detail_subject"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/detail_image"
-                android:gravity="right"
-                android:text="TextView"
-                android:fontFamily="@font/sangmon"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/detal_day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="TextView"
-                android:fontFamily="@font/sangmon"
-                android:gravity="right"/>
-
-            <TextView
-                android:id="@+id/detail_name"
-                android:layout_width="380dp"
-                android:layout_height="45dp"
-                android:layout_alignBottom="@+id/detail_image"
-                android:layout_alignParentStart="true"
-                android:background="#33000000"
-                android:gravity="center"
-                android:text="TextView"
-                android:fontFamily="@font/sangmon"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp"
-
-
-                android:textStyle="bold" />
-
-
-        </RelativeLayout>
-
-
-    </android.support.v7.widget.CardView>
-
+            android:textStyle="bold" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -90,6 +41,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+
 
             <TextView
                 android:id="@+id/content_text1"
@@ -162,6 +116,25 @@
                 android:scaleType="fitXY"
                 android:layout_margin="5dp"
                 />
+
+            <TextView
+                android:id="@+id/content_text5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:gravity="center"
+                android:fontFamily="@font/sangmon"/>
+
+
+            <ImageView
+                android:id="@+id/content_image5"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/forest"
+                android:scaleType="fitXY"
+                android:layout_margin="5dp"
+                />
+
 
 
 
