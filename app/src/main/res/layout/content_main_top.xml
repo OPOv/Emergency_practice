@@ -62,7 +62,9 @@
             android:gravity="center"
             android:text="위급이"
             android:textColor="#4c4c4c"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+
+        />
 
         <TextView
             android:id="@+id/textView7"

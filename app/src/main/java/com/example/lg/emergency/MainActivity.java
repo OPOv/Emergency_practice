@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (position > 1) {
                         Intent intent = new Intent(getApplicationContext(), KnowledgeDataActivity.class);
-                        intent.putExtra("position", position);
+                        intent.putExtra("position", position-2);
                         intent.putExtra("image", item[position - 2].getImage());
                         intent.putExtra("title", item[position - 2].getTitle());
                         intent.putExtra("day", item[position - 2].getDate());
