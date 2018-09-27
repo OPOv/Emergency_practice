@@ -120,7 +120,7 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
                     if (infoDB.getName().equals("HospitalDB"))
                         this.GetJsonAndExecuteSQL(jsonArr, new String[]{"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
                     else if (infoDB.getName().equals("ShelterDB"))
-                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"TSUNAMI_SHELTER_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"TSUNAMI_SHELTER_NM", "LOT_ADDRESS", "LAT", "LNG", "PHONE_NO"});
                 } catch (JSONException e) {
                     ExceptionHandling exceptHandling = new ExceptionHandling(e,context,"초기 설정 중 문제가 발생했습니다. \n지속적으로 문제발생시 어플리케이션 개발자에게 문의하십시오");
                     exceptHandling.StartingExceptionDialog();

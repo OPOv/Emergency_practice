@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 "Latitude text not null, Longitude test not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "HospitalData"));
         infoDB[1] = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
-                "Latitude double not null, Longitude double not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
+                "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "ShelterData"));
 
         infoDB[2] = new InformationDB("KnowledgeDB", "(id integer primary key autoincrement, Title text not null, Date text not null, " +
