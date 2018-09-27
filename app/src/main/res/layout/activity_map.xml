@@ -17,14 +17,15 @@
         android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_more"
+        android:id="@+id/fab_c_location"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="20dp"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="76dp"
+        android:layout_marginLeft="20dp"
         app:elevation="5dp"
         app:pressedTranslationZ="5dp"
-        android:src="@drawable/ic_more_w"
+        android:src="@drawable/ic_location"
         app:backgroundTint="@color/colorOrange"/>
 
     <FrameLayout

@@ -5,5 +5,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorOrange">#FF6600</color>
-
+    <color name="trans_blue">#443f51B5</color>
+    <color name="black">#000000</color>
+    <color name="gray">#c1c1c1</color>
 </resources>

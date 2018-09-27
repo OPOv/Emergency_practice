@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.Cursor;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +22,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -34,6 +38,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     FrameLayout layoutMore;
     View bgMore;
 
+    public static final String URL_Server = "http://35.221.115.152:3000/";
 
     public double latitude;
     public double longitude;
@@ -42,6 +47,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public String bestProvider;
     public Context mContext;
     public MapPOIItem cMarker;  // 현재위치 찍어주는 마커
+    public int radius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +58,51 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         mapView = findViewById(R.id.map_view);
         mapView.setDaumMapApiKey(getResources().getString(R.string.kakao_app_key));
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        radius = 100;
+        latitude = 37.765644;
+        longitude = 128.874;
+
+        // DB Part starts
+        InformationDB infoDB = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
+                "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
+                new URLClass(URL_Server + "HospitalData"));
+
+        File dbFile = new File(Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB");
+        Dao dao = new Dao(getApplicationContext(), infoDB);
+
+        Log.d("TEST 1 : ", Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB에 db 있음");
+
+        //Test DB status
+        // db init
+        Cursor cursor = dao.getDB("SELECT Name, Longitude, Latitude, PhoneNum FROM " + infoDB.getName());
+        cursor.moveToFirst();
+
+        for(int i = 1; i < 820; i++) {
+            cursor.moveToNext();
+            if (Math.abs(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))) - latitude)  < 0.001 &&
+                    Math.abs(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))) - longitude ) < 0.1) {
+                MapPOIItem marker0 = new MapPOIItem();
+                marker0.setItemName(cursor.getString(cursor.getColumnIndex("Name")));
+                marker0.setTag(cursor.getInt(0));
+                marker0.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
+                        Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude")))));
+                // 기본으로 제공하는 BluePin 마커 모양.
+                marker0.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                marker0.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+                mapView.addPOIItem(marker0);
+            }
+        }
+//            Log.i("item info : ", cursor.getString(cursor.getColumnIndex("Name")) +
+//                    ", " + cursor.getString(cursor.getColumnIndex("Latitude")) +
+//                    ", " + cursor.getString(cursor.getColumnIndex("Longitude")));
+//        Log.d("TEST 1 : ", " getCount : " + cursor.getCount());
+        // DB part end
+
 
         // 디버깅 HashKey(해시키) 가져오기
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("your.package.name", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.lg.emergency", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -80,7 +127,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         bgMore = findViewById(R.id.background_more);
 
         btnBack = findViewById(R.id.btn_back);
-        fab = findViewById(R.id.fab_more);
+        fab = findViewById(R.id.fab_c_location);
         MapPOIItem marker0 = new MapPOIItem();
         marker0.setItemName("00");
         marker0.setTag(1);
@@ -116,7 +163,11 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layoutMore.setVisibility(View.VISIBLE);
+                getLocation();
+//                MapCircle cCircle = new MapCircle(MapPoint.mapPointWithGeoCoord(latitude, longitude), 50, getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.trans_blue));
+//                MapCircle cCircle2 = new MapCircle(MapPoint.mapPointWithGeoCoord(latitude, longitude), 10, getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorOrange));
+//                mapView.addCircle(cCircle);
+//                mapView.addCircle(cCircle2);
             }
         });
 
@@ -134,7 +185,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View v) {
 
-                getLocation();
 
                 cMarker.setItemName("Current Location");
                 cMarker.setTag(0);
