@@ -166,13 +166,39 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         });
         /// cardView Fragment 부분 끝
 
-
+        // eventListener 구현부
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+
+        final MapView.POIItemEventListener poiItemEventListener = new MapView.POIItemEventListener() {
+            @Override
+            public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+                if(mapPOIItem.getTag() !=0)
+                    viewPager.setCurrentItem(mapPOIItem.getTag() - 1, true);
+            }
+
+            @Override
+            public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+
+            }
+
+            @Override
+            public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+            }
+
+            @Override
+            public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
+            }
+        };
+
+
 
         // 현재 위치로 지도 중앙 이동
         fab.setOnClickListener(new View.OnClickListener() {
@@ -201,8 +227,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 getLocation();
 
                 // 모의 위치
-//                latitude = 37.765644;
-//                longitude = 128.874;
+                latitude = 37.765644;
+                longitude = 128.874;
 
                 mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
                 cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
@@ -212,7 +238,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 mapView.addPOIItem(cMarker);
                 mapView.selectPOIItem(cMarker, true);
 
-                callHospitalList(dao, infoDB, mapView, 0.001, 0.1);
+                callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.01, 0.1);
 
                 if(hospitalList.size() != 0)
                     initFragment(viewPager);
@@ -223,6 +249,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 viewPager.setVisibility(View.VISIBLE);
             }
         });
+
 
     }
 
@@ -262,13 +289,12 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     }
 
     // 범위 내의 병원 목록을 메모리에 불러오는 함수
-    public void callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, final double latArea, double lonArea){
-        markerList.clear();
+    public void callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
         hospitalList.clear();
         Cursor cursor = dao.getDB("SELECT Name, Longitude, Latitude, PhoneNum FROM " + infoDB.getName());
         cursor.moveToFirst();
 
-        for (int i = 1; i < 820; i++) {
+        for (int i = 1; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             // 여기서 들어간 숫자들이 데이터를 가져오는 위경도 범위
             if (Math.abs(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))) - latitude) < latArea &&
@@ -279,20 +305,10 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude")))));
 
-                markerList.add(new MapPOIItem());
-                markerList.get(markerList.size() - 1).setItemName(hospitalList.get(hospitalList.size() - 1).getName());
-                markerList.get(markerList.size() - 1).setTag(i);
-                markerList.get(markerList.size() - 1).setMapPoint(MapPoint.mapPointWithGeoCoord(hospitalList.get(hospitalList.size() - 1).getLatitude(),
-                        hospitalList.get(hospitalList.size() - 1).getLongitude()));
-
-                // 기본으로 제공하는 BluePin 마커 모양.
-                markerList.get(markerList.size() - 1).setMarkerType(MapPOIItem.MarkerType.BluePin);
-                // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                markerList.get(markerList.size() - 1).setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-                mapView.addPOIItem(markerList.get(markerList.size() - 1));
             }
         }
 
+        // 거리순으로 정렬
         Collections.sort(hospitalList, new Comparator<DataItem>() {
             @Override
             public int compare(DataItem o1, DataItem o2) {
@@ -306,8 +322,31 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                     return 0;
             }
         });
+
+        // 마커 리스트 초기화
+        markerList.clear();
+        for(int i = 1; i <= hospitalList.size(); i++){
+
+            MapPOIItem lastMarker = new MapPOIItem();
+            markerList.add(lastMarker);
+            lastMarker.setItemName(hospitalList.get(i - 1).getName());
+            lastMarker.setTag(i);
+            lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(hospitalList.get(i - 1).getLatitude(), hospitalList.get(i - 1).getLongitude()));
+
+            // 기본으로 제공하는 BluePin 마커 모양.
+            lastMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            lastMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            mapView.addPOIItem(lastMarker);
+
+        }
+
+        // 마커 선택시 이벤트 리스너
+        mapView.setPOIItemEventListener(poi);
+
     }
 
+    // 아이템 갯수만큼 프래그먼트 만들기
     public void initFragment(ViewPager viewPager){
 
         CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(), dpToPixels(2, this), hospitalList.size(), hospitalList);
