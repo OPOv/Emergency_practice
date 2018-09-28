@@ -256,10 +256,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
                 getLocation();
 
-                // 모의 위치
-                latitude = 37.765644;
-                longitude = 128.874;
-
                 mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
                 cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
                 cMarker.setItemName("현재위치");

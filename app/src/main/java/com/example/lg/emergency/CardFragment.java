@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CardFragment extends Fragment {
 
@@ -57,7 +58,10 @@ public class CardFragment extends Fragment {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + phoneNum.getText())));
+                if(!phoneNum.getText().equals("")) {
+                    startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + phoneNum.getText())));
+                    Toast.makeText(getContext(), "전화번호 정보가 없습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
