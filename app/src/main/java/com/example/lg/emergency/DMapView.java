@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -21,6 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
@@ -30,6 +35,9 @@ import net.daum.mf.map.api.MapView;
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
+import static com.example.lg.emergency.ShelterActivity.dpToPixels;
 
 public class DMapView extends AppCompatActivity implements LocationListener {
 
@@ -47,7 +55,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public String bestProvider;
     public Context mContext;
     public MapPOIItem cMarker;  // 현재위치 찍어주는 마커
-    public int radius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         mapView = findViewById(R.id.map_view);
         mapView.setDaumMapApiKey(getResources().getString(R.string.kakao_app_key));
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        radius = 100;
         latitude = 37.765644;
         longitude = 128.874;
 
@@ -114,6 +120,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
         }
 
+
         getLocation();
         final MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
         mapView.setMapCenterPoint(mapPoint, true);
@@ -149,7 +156,28 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         mapView.addPOIItem(marker1);
 
 
+        /// CardView Fragment 부분
+        ViewPager viewPager = findViewById(R.id.viewPager);
 
+        CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(), dpToPixels(2, this));
+        ShadowTransformer fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
+        fragmentCardShadowTransformer.enableScaling(true);
+
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
+        viewPager.setOffscreenPageLimit(3);
+
+        float density = getResources().getDisplayMetrics().density;
+        int partialWidth = (int) (16 * density); // 16dp
+        int pageMargin = (int) (8 * density); // 8dp
+
+        int viewPagerPadding = pageMargin - partialWidth;
+
+        // 뷰페이저 패딩!!! 존나 중요함
+        viewPager.setPageMargin(-180);
+        viewPager.setPadding(0, -85, 10, -85);
+
+        /// cardView Fragment 부분 끝
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +192,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View v) {
                 getLocation();
+                mapView.setMapCenterPoint(mapPoint, true);
+                mapView.setZoomLevel(3, true);
 //                MapCircle cCircle = new MapCircle(MapPoint.mapPointWithGeoCoord(latitude, longitude), 50, getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.trans_blue));
 //                MapCircle cCircle2 = new MapCircle(MapPoint.mapPointWithGeoCoord(latitude, longitude), 10, getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorOrange));
 //                mapView.addCircle(cCircle);
@@ -192,8 +222,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
                 mapView.addPOIItem(cMarker);
 
-                mapView.setMapCenterPoint(mapPoint, true);
-                mapView.setZoomLevel(3, true);
+//                mapView.setMapCenterPoint(mapPoint, true);
+//                mapView.setZoomLevel(3, true);
                 layoutMore.setVisibility(View.GONE);
             }
         });
@@ -218,18 +248,21 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
         Log.e("lat, lon","lat: " + latitude + " longitude: " + longitude);
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
 
-        // 권한 없을시 권한 다시 부여
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//         권한 없을시 권한 다시 부여
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
             return;
         }
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        criteria = new Criteria();
+        bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
 
         Location location = locationManager.getLastKnownLocation(bestProvider);
 
@@ -268,4 +301,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+
 }

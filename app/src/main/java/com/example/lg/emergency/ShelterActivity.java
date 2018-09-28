@@ -24,6 +24,16 @@ public class ShelterActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
         viewPager.setOffscreenPageLimit(3);
+
+        float density = getResources().getDisplayMetrics().density;
+        int partialWidth = (int) (16 * density); // 16dp
+        int pageMargin = (int) (8 * density); // 8dp
+
+        int viewPagerPadding = pageMargin - partialWidth;
+
+        // 뷰페이저 패딩!!! 존나 중요함
+        viewPager.setPageMargin(-150);
+        viewPager.setPadding(0, -90, 0, -90);
     }
 
     /**

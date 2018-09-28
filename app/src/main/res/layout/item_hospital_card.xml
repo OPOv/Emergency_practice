@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    app:cardUseCompatPadding="false"
+    app:cardUseCompatPadding="true"
     app:cardElevation="5dp"
     app:cardCornerRadius="10dp"
     app:cardBackgroundColor="@color/colorWhite">
@@ -17,7 +17,7 @@
         <TextView
             android:layout_margin="15dp"
             android:id="@+id/title"
-            android:text="원주세브란스병원"
+            android:text="Title"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:id="@+id/txt_phone_number"
             android:layout_gravity="top"
             android:layout_marginLeft="15dp"
-            android:text="033-760-5090"
+            android:text="전화 번호 없음"
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -76,8 +76,10 @@
                 android:id="@+id/btn_path"
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
