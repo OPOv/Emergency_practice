@@ -18,10 +18,12 @@ public class CardFragment extends Fragment {
 
     private CardView cardView;
 
-    public static Fragment getInstance(int position) {
+    public static Fragment getInstance(int position, String name, String phoneNum) {
         CardFragment f = new CardFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
+        args.putString("name", name);
+        args.putString("phoneNum", phoneNum);
         f.setArguments(args);
 
         return f;
@@ -38,8 +40,11 @@ public class CardFragment extends Fragment {
         cardView.setMaxCardElevation(cardView.getCardElevation() * CardAdapter.MAX_ELEVATION_FACTOR);
 
         TextView title = view.findViewById(R.id.title);
+        TextView phoneNum = view.findViewById(R.id.txt_phone_number);
 
-        title.setText(String.format("Card %d", getArguments().getInt("position")));
+        title.setText(getArguments().getString("name"));
+        phoneNum.setText(getArguments().getString("phoneNum"));
+//        title.setText(String.format("Card %d", getArguments().getInt("position")));
 
         return view;
     }

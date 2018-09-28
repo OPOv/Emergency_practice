@@ -17,13 +17,14 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     private List<CardFragment> fragments;
     private float baseElevation;
+    private ArrayList<DataItem> infoList = new ArrayList<>();
 
-    public CardFragmentPagerAdapter(FragmentManager fm, float baseElevation) {
+    public CardFragmentPagerAdapter(FragmentManager fm, float baseElevation, int size, ArrayList<DataItem> infoList) {
         super(fm);
         fragments = new ArrayList<>();
         this.baseElevation = baseElevation;
-
-        for(int i = 0; i< fragments.size(); i++){
+        this.infoList.addAll(infoList);
+        for(int i = 0; i< size; i++){
             addCardFragment(new CardFragment());
         }
     }
@@ -45,7 +46,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     @Override
     public Fragment getItem(int position) {
-        return CardFragment.getInstance(position);
+        return CardFragment.getInstance(position, infoList.get(position).getName(), infoList.get(position).getPhoneNum());
     }
 
     @Override
