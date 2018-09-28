@@ -36,7 +36,6 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".HospitalActivity" />
         <activity android:name=".ShelterActivity" />
         <activity android:name=".KnowledgeDataActivity" />
         <activity android:name=".test"/>

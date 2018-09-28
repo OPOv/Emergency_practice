@@ -22,12 +22,14 @@ public class CardFragment extends Fragment {
     private CardView cardView;
     private FrameLayout btnCall, btnPath;
     private TextView title, phoneNum;
-    public static Fragment getInstance(int position, String name, String phoneNum) {
+    public static Fragment getInstance(int position, String name, String phoneNum, String latitude, String longitude) {
         CardFragment f = new CardFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
         args.putString("name", name);
         args.putString("phoneNum", phoneNum);
+        args.putString("latitude", latitude);
+        args.putString("longitude", latitude);
         f.setArguments(args);
 
         return f;
@@ -51,12 +53,25 @@ public class CardFragment extends Fragment {
         title.setText(getArguments().getString("name"));
         phoneNum.setText(getArguments().getString("phoneNum"));
 
+        // 전화 연결 인텐트
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + phoneNum.getText())));
             }
         });
+
+        // 길찾기 웹뷰로 넘어가는 인텐트
+        btnPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent("android.intent.action.VIEW",
+                        Uri.parse("http://m.map.daum.net/link/to/" + title.getText() + "," + getArguments().getString("latitude")
+                         + "," + getArguments().getString("longitude"))));
+            }
+        });
+
+
 //        title.setText(String.format("Card %d", getArguments().getInt("position")));
 
         return view;

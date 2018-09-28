@@ -46,7 +46,8 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     @Override
     public Fragment getItem(int position) {
-        return CardFragment.getInstance(position, infoList.get(position).getName(), infoList.get(position).getPhoneNum());
+        return CardFragment.getInstance(position, infoList.get(position).getName(), infoList.get(position).getPhoneNum(),
+                infoList.get(position).getLatitude() + "", infoList.get(position).getLongitude() + "");
     }
 
     @Override

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -59,6 +60,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public ArrayList<DataItem> hospitalList;
     public ArrayList<MapPOIItem> markerList;
     public Dao dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +73,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         hospitalList = new ArrayList<>();
         markerList = new ArrayList<>();
 
-//        latitude = 37.765644;
-//        longitude = 128.874;
-
         // DB Part starts
         final InformationDB infoDB = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
@@ -84,14 +83,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
         Log.d("TEST 1 : ", Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB에 db 있음");
 
-        //Test DB status
-        // db init
-
-
-//            Log.i("item info : ", cursor.getString(cursor.getColumnIndex("Name")) +
-//                    ", " + cursor.getString(cursor.getColumnIndex("Latitude")) +
-//                    ", " + cursor.getString(cursor.getColumnIndex("Longitude")));
-//        Log.d("TEST 1 : ", " getCount : " + cursor.getCount());
         // DB part end
 
 
@@ -119,16 +110,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         btnBack = findViewById(R.id.btn_back);
         fab = findViewById(R.id.fab_c_location);
         btnHospital = findViewById(R.id.btn_hospital);
-
-//        MapPOIItem marker0 = new MapPOIItem();
-//        marker0.setItemName("00");
-//        marker0.setTag(1);
-//        marker0.setMapPoint(MapPoint.mapPointWithGeoCoord(37.5370192, 126.87352970000006));
-//        // 기본으로 제공하는 BluePin 마커 모양.
-//        marker0.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-//        marker0.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//        mapView.addPOIItem(marker0);
 
 
         /// CardView Fragment 부분
@@ -198,6 +179,55 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             }
         };
 
+        MapView.MapViewEventListener mapViewEventListener = new MapView.MapViewEventListener() {
+            @Override
+            public void onMapViewInitialized(MapView mapView) {
+
+            }
+
+            @Override
+            public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+
+            }
+
+            @Override
+            public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+                viewPager.setVisibility(View.GONE);
+                btnHospital.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
+
+            }
+        };
+
+        mapView.setMapViewEventListener(mapViewEventListener);
 
 
         // 현재 위치로 지도 중앙 이동
@@ -238,7 +268,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 mapView.addPOIItem(cMarker);
                 mapView.selectPOIItem(cMarker, true);
 
-                callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.01, 0.1);
+                callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.1);
 
                 if(hospitalList.size() != 0)
                     initFragment(viewPager);
