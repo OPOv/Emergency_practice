@@ -267,6 +267,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 4);
             return;
         }
 
