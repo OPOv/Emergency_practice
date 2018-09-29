@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
 
     TextView text[] = new TextView[5];
     ImageView image[] = new ImageView[5];
-    public int key = 0;
+
 
 
 
@@ -29,6 +30,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knowledge_detail);
+
 
 
         text[0] = (TextView)findViewById(R.id.content_text1);
@@ -129,7 +131,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    public void back_btn(View view) {
+        finish();
+    }
 }

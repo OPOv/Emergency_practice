@@ -1,23 +1,17 @@
 package com.example.lg.emergency;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.bumptech.glide.Glide;
 
@@ -127,8 +121,8 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
 
     class KnowledgeMiddle extends RecyclerView.ViewHolder{
-        ImageButton btnShelter, btnHospital;
-        TextView textView;
+
+
         public KnowledgeMiddle(View itemView) {
             super(itemView);
 

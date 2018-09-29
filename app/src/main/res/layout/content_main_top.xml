@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView5"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="@color/colorWhite"-->
+        <!--android:fontFamily="@font/jua"-->
+        <!--android:gravity="center"-->
+        <!--android:text="위급이"-->
+        <!--android:textColor="#4c4c4c"-->
+        <!--android:textSize="25dp"-->
+
+        <!--/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal"
+        android:id="@+id/action_barr"
+        android:background="@color/colorWhite"
+        android:elevation="12dp">
+
+
+        <TextView
+            android:id="@+id/detail_name"
+           android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:fontFamily="@font/jua"
+            android:paddingTop="2dp"
+            android:gravity="center"
+            android:text="위급이"
+            android:textColor="#4c4c4c"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="10dp"
+      >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
 
 
         android:background="@color/colorOrange"
-        tools:ignore="MissingConstraints"
+
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -25,7 +72,7 @@
 
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="100dp"
-            android:layout_marginLeft="45dp"
+            android:layout_marginLeft="35dp"
             android:background="@color/colorWhite"
             android:onClick="shelter_btn"
             android:scaleType="fitXY"
@@ -41,30 +88,12 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/btn_shelter"
             android:layout_marginBottom="100dp"
-            android:layout_marginRight="45dp"
+            android:layout_marginRight="35dp"
             android:background="@color/colorWhite"
 
             android:onClick="hospital_btn"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/circle_hos" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/colorWhite"
-            android:fontFamily="@font/jua"
-            android:gravity="center"
-            android:text="위급이"
-            android:textColor="#4c4c4c"
-            android:textSize="25dp"
-
-        />
 
         <TextView
             android:id="@+id/textView7"
@@ -73,7 +102,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="74dp"
-            android:layout_marginStart="73dp"
+            android:layout_marginStart="63dp"
             android:fontFamily="@font/jua"
             android:text="대피소 위치"
             android:textColor="@color/colorWhite"
@@ -85,25 +114,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/textView7"
-            android:layout_marginEnd="78dp"
+            android:layout_marginEnd="68dp"
             android:fontFamily="@font/jua"
             android:text="병원위치"
             android:textColor="@color/colorWhite"
             android:textSize="15dp" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="47dp"
-            android:layout_height="31dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="11dp"
-            android:background="@color/colorWhite"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/navigation" />
+
 
     </RelativeLayout>
 
+    </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
