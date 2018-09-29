@@ -65,7 +65,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         hospitalList = new ArrayList<>();
         markerList = new ArrayList<>();
-
         // DB Part starts
         final InformationDB infoDB = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
@@ -118,6 +117,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         viewPager.setPageMargin(-180);
         viewPager.setPadding(0, -85, 10, -85);
 
+        // viewPager 아이템 클릭시 해당 마커 셀렉트
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -281,7 +281,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
 //         권한 없을시 권한 다시 부여
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
