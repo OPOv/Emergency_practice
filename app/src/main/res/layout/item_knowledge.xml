@@ -33,8 +33,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/test" />
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/adapter_subject"
