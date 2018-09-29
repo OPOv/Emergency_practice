@@ -21,8 +21,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
@@ -41,6 +43,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     FloatingActionButton fab;
     ImageButton btnBack;
     CardView btnHospital;
+    TextView txtBtn;
 
     public static final String URL_Server = "http://35.221.115.152:3000/";
 
@@ -53,6 +56,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public ArrayList<DataItem> hospitalList;
     public ArrayList<MapPOIItem> markerList;
     public Dao dao;
+    public int onoff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         hospitalList = new ArrayList<>();
         markerList = new ArrayList<>();
+        onoff = 0;
+
         // DB Part starts
         final InformationDB infoDB = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
@@ -102,7 +108,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         btnBack = findViewById(R.id.btn_back);
         fab = findViewById(R.id.fab_c_location);
         btnHospital = findViewById(R.id.btn_hospital);
-
+        txtBtn = findViewById(R.id.txt_btn);
 
         /// CardView Fragment 부분
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -172,57 +178,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             }
         };
 
-        MapView.MapViewEventListener mapViewEventListener = new MapView.MapViewEventListener() {
-            @Override
-            public void onMapViewInitialized(MapView mapView) {
-
-            }
-
-            @Override
-            public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-
-            }
-
-            @Override
-            public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-
-            }
-
-            @Override
-            public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-                viewPager.setVisibility(View.GONE);
-                btnHospital.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
-            }
-
-            @Override
-            public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
-            }
-
-            @Override
-            public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
-
-            }
-
-            @Override
-            public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
-
-            }
-
-            @Override
-            public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-
-            }
-        };
-
-        mapView.setMapViewEventListener(mapViewEventListener);
-
-
         // 현재 위치로 지도 중앙 이동
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,26 +200,45 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         btnHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapView.removePOIItem(cMarker);
 
-                getLocation();
+                if(onoff % 2 == 0){
+                    onoff++;
+                    mapView.removePOIItem(cMarker);
+                    btnHospital.setCardBackgroundColor(getResources().getColor(R.color.colorOrange));
+                    txtBtn.setTextColor(getResources().getColor(R.color.colorWhite));
+                    txtBtn.setText(" 취소 ");
+                    getLocation();
 
-                mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-                cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
-                cMarker.setItemName("현재위치");
-                cMarker.setTag(0);
-                cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
-                mapView.addPOIItem(cMarker);
-                mapView.selectPOIItem(cMarker, true);
+                    // 모의 위치
+//                    latitude = 37.7585837;
+//                    longitude = 128.8860886;
 
-                callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.1);
+                    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+                    cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+                    cMarker.setItemName("현재위치");
+                    cMarker.setTag(0);
+                    cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                    mapView.addPOIItem(cMarker);
+                    mapView.selectPOIItem(cMarker, true);
 
-                if(hospitalList.size() != 0)
-                    initFragment(viewPager);
-                else
-                    Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+                    callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.01);
 
-                viewPager.setVisibility(View.VISIBLE);
+                    if(hospitalList.size() != 0)
+                        initFragment(viewPager);
+                    else
+                        Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+
+                    viewPager.setVisibility(View.VISIBLE);}
+                else{
+                    onoff = 0;
+                    mapView.removeAllPOIItems();
+                    viewPager.setVisibility(View.GONE);
+                    btnHospital.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
+                    txtBtn.setTextColor(getResources().getColor(R.color.colorOrange));
+                    txtBtn.setText(" 가까운 병원 보기 ");
+                }
+
+
             }
         });
 

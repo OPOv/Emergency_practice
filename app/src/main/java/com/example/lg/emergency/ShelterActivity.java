@@ -21,6 +21,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.daum.mf.map.api.*;
@@ -38,6 +39,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     FloatingActionButton fab;
     ImageButton btnBack;
     CardView btnShelter;
+    TextView txtBtn;
 
     public static final String URL_Server = "http://35.221.115.152:3000/";
 
@@ -50,6 +52,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     public ArrayList<DataItem> shelterList;
     public ArrayList<MapPOIItem> markerList;
     public Dao dao;
+    public int onoff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         shelterList = new ArrayList<>();
         markerList = new ArrayList<>();
+        onoff = 0;
 
         // DB Part starts
         final InformationDB infoDB = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
@@ -100,7 +104,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
         btnBack = findViewById(R.id.btn_back);
         fab = findViewById(R.id.fab_c_location);
         btnShelter = findViewById(R.id.btn_hospital);
-
+        txtBtn = findViewById(R.id.txt_btn);
 
         /// CardView Fragment 부분
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -244,26 +248,45 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
         btnShelter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapView.removePOIItem(cMarker);
 
-                getLocation();
 
-                mapView.setMapCenterPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-                cMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude));
-                cMarker.setItemName("현재위치");
-                cMarker.setTag(0);
-                cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
-                mapView.addPOIItem(cMarker);
-                mapView.selectPOIItem(cMarker, true);
+                if(onoff % 2 == 0){
+                    onoff++;
+                    mapView.removePOIItem(cMarker);
+                    btnShelter.setCardBackgroundColor(getResources().getColor(R.color.colorOrange));
+                    txtBtn.setTextColor(getResources().getColor(R.color.colorWhite));
+                    txtBtn.setText(" 취소 ");
 
-                callShelterList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.2);
+                    getLocation();
 
-                if(shelterList.size() != 0)
-                    initFragment(viewPager);
-                else
-                    Toast.makeText(ShelterActivity.this, "근처에 대피소가 없습니다", Toast.LENGTH_SHORT).show();
+                    // 모의 위치
+    //                latitude = 37.7585837;
+    //                longitude = 128.8860886;
 
-                viewPager.setVisibility(View.VISIBLE);
+                    mapView.setMapCenterPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+                    cMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude));
+                    cMarker.setItemName("현재위치");
+                    cMarker.setTag(0);
+                    cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                    mapView.addPOIItem(cMarker);
+                    mapView.selectPOIItem(cMarker, true);
+
+                    callShelterList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.1);
+
+                    if(shelterList.size() != 0)
+                        initFragment(viewPager);
+                    else
+                        Toast.makeText(ShelterActivity.this, "근처에 대피소가 없습니다", Toast.LENGTH_SHORT).show();
+
+                    viewPager.setVisibility(View.VISIBLE);}
+                else{
+                    onoff = 0;
+                    mapView.removeAllPOIItems();
+                    viewPager.setVisibility(View.GONE);
+                    btnShelter.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
+                    txtBtn.setTextColor(getResources().getColor(R.color.colorOrange));
+                    txtBtn.setText(" 가까운 대피소 보기 ");
+                }
             }
         });
 
