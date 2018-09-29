@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/app_logo_image_tr"
+        android:icon="@drawable/app_image"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_logo_image_tr"
+        android:roundIcon="@drawable/app_image"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

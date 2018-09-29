@@ -79,19 +79,22 @@
             android:id="@+id/btn_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/ic_back_arrow_w"
+            android:background="@drawable/back_arrow"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"/>
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorWhite"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="1"
             android:text="대피소"
-            android:layout_marginLeft="15dp"
-            android:elevation="10dp"/>
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:fontFamily="@font/jua"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp" />
 
     </LinearLayout>
 
