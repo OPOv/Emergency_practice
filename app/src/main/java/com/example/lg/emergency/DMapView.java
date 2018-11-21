@@ -10,12 +10,12 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
@@ -24,7 +24,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
@@ -58,14 +57,23 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public Dao dao;
     public int onoff;
 
+    public double[] LAT = { 0.005, 0.006, 0.007, 0.008 };
+    public double[] LON = { 0.01, 0.011, 0.012, 0.013 };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 4);
+
         final MapView mapView;
         mapView = findViewById(R.id.map_view);
         mapView.setDaumMapApiKey(getResources().getString(R.string.kakao_app_key));
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         hospitalList = new ArrayList<>();
         markerList = new ArrayList<>();
@@ -104,7 +112,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         mapView.setMapCenterPoint(mapPoint, true);
 
         cMarker = new MapPOIItem();
-
         btnBack = findViewById(R.id.btn_back);
         fab = findViewById(R.id.fab_c_location);
         btnHospital = findViewById(R.id.btn_hospital);
@@ -190,7 +197,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                 cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
                 cMarker.setItemName("현재위치");
                 cMarker.setTag(0);
-                cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                cMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                cMarker.setCustomImageResourceId(R.drawable.ic_marker_current);
                 mapView.addPOIItem(cMarker);
                 mapView.selectPOIItem(cMarker, true);
             }
@@ -217,16 +225,24 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                     cMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
                     cMarker.setItemName("현재위치");
                     cMarker.setTag(0);
-                    cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                    cMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                    cMarker.setCustomImageResourceId(R.drawable.ic_marker_current);
                     mapView.addPOIItem(cMarker);
                     mapView.selectPOIItem(cMarker, true);
 
-                    callHospitalList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.01);
 
-                    if(hospitalList.size() != 0)
-                        initFragment(viewPager);
-                    else
-                        Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+                    // 못찾으면 범위를 4번 정도 늘리고 그래도 없으면 토스트 출력
+                    for(int i = 0; i < 4; i++){
+                        if(callHospitalList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/))
+                            callHospitalList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/);
+                        else {
+                            initFragment(viewPager);
+                            break;
+                        }
+                        if(i==3)
+                            Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+                    }
+
 
                     viewPager.setVisibility(View.VISIBLE);}
                 else{
@@ -282,8 +298,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
     }
 
-    // 범위 내의 병원 목록을 메모리에 불러오는 함수
-    public void callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
+    public boolean callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
         hospitalList.clear();
         Cursor cursor = dao.getDB("SELECT Name, Longitude, Latitude, PhoneNum FROM " + infoDB.getName());
         cursor.moveToFirst();
@@ -301,6 +316,10 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
             }
         }
+
+        // 만약 병원 데이터가 비어있다면 false 리턴
+        if(hospitalList.isEmpty())
+            return false;
 
         // 거리순으로 정렬
         Collections.sort(hospitalList, new Comparator<DataItem>() {
@@ -328,15 +347,18 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(hospitalList.get(i - 1).getLatitude(), hospitalList.get(i - 1).getLongitude()));
 
             // 기본으로 제공하는 BluePin 마커 모양.
-            lastMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            lastMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            cMarker.setCustomImageResourceId(R.drawable.ic_marker_unselect);
             // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-            lastMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            lastMarker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+            cMarker.setCustomSelectedImageResourceId(R.drawable.ic_marker_select);
             mapView.addPOIItem(lastMarker);
 
         }
 
         // 마커 선택시 이벤트 리스너
         mapView.setPOIItemEventListener(poi);
+        return true;
 
     }
 

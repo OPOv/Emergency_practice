@@ -24,7 +24,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.daum.mf.map.api.*;
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapView;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -54,10 +55,18 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     public Dao dao;
     public int onoff;
 
+    public double[] LAT = { 0.005, 0.006, 0.007, 0.008 };
+    public double[] LON = { 0.01, 0.011, 0.012, 0.013 };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 4);
 
         final MapView mapView;
         mapView = findViewById(R.id.map_view);
@@ -238,7 +247,8 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
                 cMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude));
                 cMarker.setItemName("현재위치");
                 cMarker.setTag(0);
-                cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                cMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                cMarker.setCustomImageResourceId(R.drawable.ic_marker_current);
                 mapView.addPOIItem(cMarker);
                 mapView.selectPOIItem(cMarker, true);
             }
@@ -267,11 +277,22 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
                     cMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude));
                     cMarker.setItemName("현재위치");
                     cMarker.setTag(0);
-                    cMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+                    cMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                    cMarker.setCustomImageResourceId(R.drawable.ic_marker_current);
                     mapView.addPOIItem(cMarker);
                     mapView.selectPOIItem(cMarker, true);
 
-                    callShelterList(dao, infoDB, mapView, poiItemEventListener, 0.005, 0.1);
+                    // 못찾으면 범위를 4번 정도 늘리고 그래도 없으면 토스트 출력
+                    for(int i = 0; i < 4; i++){
+                        if(callShelterList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/))
+                            callShelterList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/);
+                        else {
+                            initFragment(viewPager);
+                            break;
+                        }
+                        if(i==3)
+                            Toast.makeText(ShelterActivity.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+                    }
 
                     if(shelterList.size() != 0)
                         initFragment(viewPager);
@@ -331,7 +352,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     }
 
     // 범위 내의 대피소 목록을 메모리에 불러오는 함수
-    public void callShelterList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
+    public boolean callShelterList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
         shelterList.clear();
         Cursor cursor = dao.getDB("SELECT Name, Longitude, Latitude, PhoneNum FROM " + infoDB.getName());
         cursor.moveToFirst();
@@ -349,6 +370,9 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
 
             }
         }
+        // 만약 병원 데이터가 비어있다면 false 리턴
+            if(shelterList.isEmpty())
+                return false;
 
         // 거리순으로 정렬
         Collections.sort(shelterList, new Comparator<DataItem>() {
@@ -376,9 +400,11 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
             lastMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(shelterList.get(i - 1).getLatitude(), shelterList.get(i - 1).getLongitude()));
 
             // 기본으로 제공하는 BluePin 마커 모양.
-            lastMarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            lastMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            cMarker.setCustomImageResourceId(R.drawable.ic_marker_unselect);
             // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-            lastMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            lastMarker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+            cMarker.setCustomSelectedImageResourceId(R.drawable.ic_marker_select);
             mapView.addPOIItem(lastMarker);
 
         }
@@ -386,6 +412,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
         // 마커 선택시 이벤트 리스너
         mapView.setPOIItemEventListener(poi);
 
+        return true;
     }
 
     // 아이템 갯수만큼 프래그먼트 만들기
