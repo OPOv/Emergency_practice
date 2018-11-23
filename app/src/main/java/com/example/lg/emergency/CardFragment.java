@@ -68,11 +68,29 @@ public class CardFragment extends Fragment {
 
         // 길찾기 웹뷰로 넘어가는 인텐트
         btnPath.setOnClickListener(new View.OnClickListener() {
+//            String nameCon;
             @Override
             public void onClick(View v) {
-                startActivity(new Intent("android.intent.action.VIEW",
+                Intent navigate = new Intent(getContext(), NavigateActivity.class);
+//                if(title.getText().toString().contains(" ")) {
+//                    ArrayList<String> name = new ArrayList<>();
+//                    Collections.addAll(name, title.getText().toString().split(" "));
+//                    nameCon = "";
+//                    for (int i = 0; i < name.size(); i++) {
+//                        if (i == 0)
+//                            nameCon = name.get(i);
+//                        else
+//                            nameCon = nameCon + "%20" + name.get(i);
+//                    }
+//                }
+
+                navigate.putExtra("url",
                         Uri.parse("http://map.daum.net/link/to/" + title.getText() + "," + getArguments().getString("latitude")
-                         + "," + getArguments().getString("longitude"))));
+                        + "," + getArguments().getString("longitude")).toString());
+                startActivity(navigate);
+//                startActivity(new Intent("android.intent.action.VIEW",
+//                        Uri.parse("http://map.daum.net/link/to/" + title.getText() + "," + getArguments().getString("latitude")
+//                         + "," + getArguments().getString("longitude"))));
                 Log.e("11d","http://map.daum.net/link/to/" + title.getText() + "," + getArguments().getString("latitude")
                          + "," + getArguments().getString("longitude"));
             }

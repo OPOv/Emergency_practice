@@ -314,6 +314,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
                             initFragment(viewPager);
                             viewPager.setVisibility(View.VISIBLE);
+                            mapView.selectPOIItem(markerList.get(0), true);
                         }
                         // 키보드 숨기기
                         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

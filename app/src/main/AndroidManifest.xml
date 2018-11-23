@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@drawable/app_image"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_image"
+        android:roundIcon="@drawable/app_logo_image_tr"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -40,6 +40,7 @@
         <activity android:name=".KnowledgeDataActivity" />
         <activity android:name=".test"/>
         <activity android:name=".DMapView"/>
+        <activity android:name=".NavigateActivity"/>
     </application>
 
 </manifest>
