@@ -36,7 +36,13 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     @Override
     public CardView getCardViewAt(int position) {
-        return fragments.get(position).getCardView();
+        CardView returnCard;
+        try{
+            returnCard = fragments.get(position).getCardView();
+        } catch (IndexOutOfBoundsException e){
+            return null;
+        }
+        return returnCard;
     }
 
     @Override
