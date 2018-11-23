@@ -166,6 +166,9 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 키보드 숨기기
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
                 finish();
             }
         });
@@ -299,26 +302,22 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch(actionId) {
                     case EditorInfo.IME_ACTION_GO:
-                        if(onoff1 % 2 == 0){
-                            onoff1++;
-                            mapView.removePOIItem(cMarker);
-                            // 키보드 숨기기
-                            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
-
-                            searchItem(dao, infoDB, mapView, poiItemEventListener, txtSearch.getText().toString());
-
+                        mapView.removePOIItem(cMarker);
+                        if(!searchItem(dao, infoDB, mapView, poiItemEventListener, txtSearch.getText().toString())){
+                            Toast.makeText(DMapView.this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                            mapView.removeAllPOIItems();
+                            viewPager.setVisibility(View.GONE);
+                            break;
+                        } else {
                             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(
                                     hospitalList.get(0).getLatitude(), hospitalList.get(0).getLongitude()), true);
 
                             initFragment(viewPager);
-                            viewPager.setVisibility(View.VISIBLE);}
-                        else{
-                            onoff1 = 0;
-                            mapView.removeAllPOIItems();
-                            viewPager.setVisibility(View.GONE);
-                            Toast.makeText(DMapView.this, "해당위치에 병원은 지원하지 않습니다", Toast.LENGTH_SHORT).show();
+                            viewPager.setVisibility(View.VISIBLE);
                         }
+                        // 키보드 숨기기
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
                         txtSearch.setText("");
                         txtSearch.setVisibility(View.GONE);
                         btnExit.setVisibility(View.GONE);
@@ -437,6 +436,12 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
     // 주소에 검색어 searchKey를 포함하고 있으면 true 아니면 false 리턴하는 검색 메소드
     public boolean searchItem(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, String searchKey){
+
+        if(searchKey.equals("") || searchKey.equals(" ")){
+            Toast.makeText(this, "검색 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         Cursor cursor = dao.getDB("SELECT * FROM " + infoDB.getName());
         cursor.moveToFirst();
         hospitalList.clear();
