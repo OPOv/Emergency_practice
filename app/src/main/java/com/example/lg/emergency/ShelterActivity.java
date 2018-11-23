@@ -357,10 +357,6 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
                             imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
 
                             searchItem(dao, infoDB, mapView, poiItemEventListener, txtSearch.getText().toString());
-                            for(int i = 0; i < 4; i++)
-                                Log.e("shelterList",
-                                        shelterList.get(i).getName() + " : " + shelterList.get(i).getLongitude()
-                                                + ", " + shelterList.get(i).getLatitude());
 
                             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(
                                     shelterList.get(0).getLatitude(), shelterList.get(0).getLongitude()), true);

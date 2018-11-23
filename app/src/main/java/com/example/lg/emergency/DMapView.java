@@ -307,10 +307,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                             imm.hideSoftInputFromWindow(txtSearch.getWindowToken(), 0);
 
                             searchItem(dao, infoDB, mapView, poiItemEventListener, txtSearch.getText().toString());
-                            for(int i = 0; i < 4; i++)
-                                Log.e("hospitalList",
-                                        hospitalList.get(i).getName() + " : " + hospitalList.get(i).getLongitude()
-                                + ", " + hospitalList.get(i).getLatitude());
 
                             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(
                                     hospitalList.get(0).getLatitude(), hospitalList.get(0).getLongitude()), true);
