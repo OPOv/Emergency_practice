@@ -62,8 +62,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public Dao dao;
     public int onoff, onoff1;
 
-    public double[] LAT = { 0.005, 0.006, 0.007, 0.008 };
-    public double[] LON = { 0.01, 0.011, 0.012, 0.013 };
+    public int[] dist = {2, 4, 6, 8};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,11 +244,11 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
                     // 못찾으면 범위를 4번 정도 늘리고 그래도 없으면 토스트 출력
                     for(int i = 0; i < 4; i++){
-                        if(callHospitalList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/)) {
+                        if(callHospitalList(dao, infoDB, mapView, poiItemEventListener, dist[i])) {
                             initFragment(viewPager);
                             break;
                         } else
-                            callHospitalList(dao, infoDB, mapView, poiItemEventListener, LAT[i]/*0.005*/, LON[i]/*0.01*/);
+                            callHospitalList(dao, infoDB, mapView, poiItemEventListener,dist[i]);
                         if(i==3)
                             Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
                     }
@@ -371,7 +370,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
     }
 
-    public boolean callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, final double latArea, double lonArea){
+    public boolean callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, double distance){
         hospitalList.clear();
         Cursor cursor = dao.getDB("SELECT * FROM " + infoDB.getName());
         cursor.moveToFirst();
@@ -379,8 +378,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         for (int i = 1; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             // 여기서 들어간 숫자들이 데이터를 가져오는 위경도 범위
-            if (Math.abs(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))) - latitude) < latArea &&
-                    Math.abs(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))) - longitude) < lonArea) {
+            if(CalculDistance(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
+                    Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))),latitude,longitude) < distance) {
 
                 hospitalList.add(new DataItem(cursor.getString(cursor.getColumnIndex("Name")),
                         cursor.getString(cursor.getColumnIndex("PhoneNum")),
@@ -541,5 +540,22 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
     }
 
+    public double CalculDistance(double lat1, double lon1, double lat2, double lon2){
+        double diffLat = Math.abs(lat1-lat2);
+        double diffLon = Math.abs(lon1-lon2);
 
+        int latSi = (int)(diffLat);
+        int latBun = (int)((diffLat - latSi) * 60);
+        int latCho = (int)(((diffLat - latSi) * 60 - latBun) * 60);
+
+        int lonSi = (int)(diffLon);
+        int lonBun = (int)((diffLon - lonSi) * 60);
+        int lonCho = (int)(((diffLon - lonSi) * 60 - lonBun) * 60);
+
+        double a = latSi * 111 + (double)latBun * 1.85 + (double)latCho * 0.031;
+        double b = (double)lonSi * 88.8 + (double)lonBun * 1.48 + lonCho * 0.025;
+
+        return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+
+    }
 }
