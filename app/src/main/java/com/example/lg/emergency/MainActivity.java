@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         InformationDB infoDB[] = new InformationDB[3];
         infoDB[0] = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
-                "Latitude text not null, Longitude test not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
+                "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "HospitalData"));
         infoDB[1] = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
