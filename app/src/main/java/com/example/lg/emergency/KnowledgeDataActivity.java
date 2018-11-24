@@ -1,12 +1,15 @@
 package com.example.lg.emergency;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +26,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
     TextView text[] = new TextView[5];
     ImageView image[] = new ImageView[5];
 
-
+    TextView[][]subText = new TextView[5][10];
 
 
     @Override
@@ -46,10 +49,73 @@ public class KnowledgeDataActivity extends AppCompatActivity {
         image[3] = (ImageView)findViewById(R.id.content_image4);
         image[4] = (ImageView)findViewById(R.id.content_image5);
 
+        subText[0][0]= (TextView)findViewById(R.id.tv1_1_KnowledgeDataActivity);
+        subText[0][1]= (TextView)findViewById(R.id.tv1_2_KnowledgeDataActivity);
+        subText[0][2]= (TextView)findViewById(R.id.tv1_3_KnowledgeDataActivity);
+        subText[0][3]= (TextView)findViewById(R.id.tv1_4_KnowledgeDataActivity);
+        subText[0][4]= (TextView)findViewById(R.id.tv1_5_KnowledgeDataActivity);
+        subText[0][5]= (TextView)findViewById(R.id.tv1_6_KnowledgeDataActivity);
+        subText[0][6]= (TextView)findViewById(R.id.tv1_7_KnowledgeDataActivity);
+        subText[0][7]= (TextView)findViewById(R.id.tv1_8_KnowledgeDataActivity);
+        subText[0][8]= (TextView)findViewById(R.id.tv1_9_KnowledgeDataActivity);
+        subText[0][9]= (TextView)findViewById(R.id.tv1_10_KnowledgeDataActivity);
+
+        subText[1][0]= (TextView)findViewById(R.id.tv2_1_KnowledgeDataActivity);
+        subText[1][1]= (TextView)findViewById(R.id.tv2_2_KnowledgeDataActivity);
+        subText[1][2]= (TextView)findViewById(R.id.tv2_3_KnowledgeDataActivity);
+        subText[1][3]= (TextView)findViewById(R.id.tv2_4_KnowledgeDataActivity);
+        subText[1][4]= (TextView)findViewById(R.id.tv2_5_KnowledgeDataActivity);
+        subText[1][5]= (TextView)findViewById(R.id.tv2_6_KnowledgeDataActivity);
+        subText[1][6]= (TextView)findViewById(R.id.tv2_7_KnowledgeDataActivity);
+        subText[1][7]= (TextView)findViewById(R.id.tv2_8_KnowledgeDataActivity);
+        subText[1][8]= (TextView)findViewById(R.id.tv2_9_KnowledgeDataActivity);
+        subText[1][9]= (TextView)findViewById(R.id.tv2_10_KnowledgeDataActivity);
+
+        subText[2][0]= (TextView)findViewById(R.id.tv3_1_KnowledgeDataActivity);
+        subText[2][1]= (TextView)findViewById(R.id.tv3_2_KnowledgeDataActivity);
+        subText[2][2]= (TextView)findViewById(R.id.tv3_3_KnowledgeDataActivity);
+        subText[2][3]= (TextView)findViewById(R.id.tv3_4_KnowledgeDataActivity);
+        subText[2][4]= (TextView)findViewById(R.id.tv3_5_KnowledgeDataActivity);
+        subText[2][5]= (TextView)findViewById(R.id.tv3_6_KnowledgeDataActivity);
+        subText[2][6]= (TextView)findViewById(R.id.tv3_7_KnowledgeDataActivity);
+        subText[2][7]= (TextView)findViewById(R.id.tv3_8_KnowledgeDataActivity);
+        subText[2][8]= (TextView)findViewById(R.id.tv3_9_KnowledgeDataActivity);
+        subText[2][9]= (TextView)findViewById(R.id.tv3_10_KnowledgeDataActivity);
+
+        subText[3][0]= (TextView)findViewById(R.id.tv4_1_KnowledgeDataActivity);
+        subText[3][1]= (TextView)findViewById(R.id.tv4_2_KnowledgeDataActivity);
+        subText[3][2]= (TextView)findViewById(R.id.tv4_3_KnowledgeDataActivity);
+        subText[3][3]= (TextView)findViewById(R.id.tv4_4_KnowledgeDataActivity);
+        subText[3][4]= (TextView)findViewById(R.id.tv4_5_KnowledgeDataActivity);
+        subText[3][5]= (TextView)findViewById(R.id.tv4_6_KnowledgeDataActivity);
+        subText[3][6]= (TextView)findViewById(R.id.tv4_7_KnowledgeDataActivity);
+        subText[3][7]= (TextView)findViewById(R.id.tv4_8_KnowledgeDataActivity);
+        subText[3][8]= (TextView)findViewById(R.id.tv4_9_KnowledgeDataActivity);
+        subText[3][9]= (TextView)findViewById(R.id.tv4_10_KnowledgeDataActivity);
+
+
+        subText[4][0]= (TextView)findViewById(R.id.tv5_1_KnowledgeDataActivity);
+        subText[4][1]= (TextView)findViewById(R.id.tv5_2_KnowledgeDataActivity);
+        subText[4][2]= (TextView)findViewById(R.id.tv5_3_KnowledgeDataActivity);
+        subText[4][3]= (TextView)findViewById(R.id.tv5_4_KnowledgeDataActivity);
+        subText[4][4]= (TextView)findViewById(R.id.tv5_5_KnowledgeDataActivity);
+        subText[4][5]= (TextView)findViewById(R.id.tv5_6_KnowledgeDataActivity);
+        subText[4][6]= (TextView)findViewById(R.id.tv5_7_KnowledgeDataActivity);
+        subText[4][7]= (TextView)findViewById(R.id.tv5_8_KnowledgeDataActivity);
+        subText[4][8]= (TextView)findViewById(R.id.tv5_9_KnowledgeDataActivity);
+        subText[4][9]= (TextView)findViewById(R.id.tv5_10_KnowledgeDataActivity);
+
         for(int i = 0; i <5 ; i++)
         {
             text[i].setVisibility(View.GONE);
             image[i].setVisibility(View.GONE);
+        }
+
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 10; j++) {
+                subText[i][j].setVisibility(View.GONE);
+                subText[i][j].setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            }
         }
 
         Intent intent = getIntent();
@@ -99,15 +165,28 @@ public class KnowledgeDataActivity extends AppCompatActivity {
              * Glide.with(출력할 Activity).load(이미지 저장 장소(server면 url, 어플내부면 R.drawable.xxx).apply(new RequestOptions()
              *                            .override(width값, height값(이미지 크기 조정 생략 가능)).into(출력할 ImageView 선택);
              */
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++) {
                 if (!arrList.get(i).equals("")) {
+                    String[] temp = new String[2];
+                    temp[0] = arrList.get(i).split("/textSize/")[0];
+                    temp[1] = arrList.get(i).split("/textSize/")[1];
+                    text[i].setTextSize(Float.parseFloat(temp[0]));
 
-                    text[i].setText(arrList.get(i));
+                    SplitFunc(temp,"/textSytle/");
+                    text[i].setTypeface(Typeface.DEFAULT_BOLD);
+                    text[i].setText(temp[1].split("/split/")[0]);
                     text[i].setVisibility(View.VISIBLE);
+
+                    for (int c = 0; c < temp[1].split("/split/").length - 1; c++) {
+                        subText[i][c].setText(temp[1].split("/split/")[c+1]);
+                        subText[i][c].setVisibility(View.VISIBLE);
+                    }
                 }
+            }
+
             for (int i = 5; i < 10; i++)
                 if (!arrList.get(i).equals("")) {
-                    Glide.with(this).load(MainActivity.URL_Server + "img/detail/" + (position + 1) + "_" + (i - 4) + ".jpg").into(image[i - 5]);
+                    GlideApp.with(this).load(MainActivity.URL_Server + "img/detail/" + (position + 1) + "_" + (i - 4) + ".jpg").into(image[i - 5]);
                     image[i - 5].setVisibility(View.VISIBLE);
                 }
 
@@ -128,6 +207,11 @@ public class KnowledgeDataActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void SplitFunc(String[] temp,String regex){
+        temp[0] = temp[1].split(regex)[0];
+        temp[1] = temp[1].split(regex)[1];
     }
 
 

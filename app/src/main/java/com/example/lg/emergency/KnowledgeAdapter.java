@@ -73,7 +73,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
 
 //            Drawable drawable=mContext.getResources().getDrawable(item.getImage());
             //((KnowledgeViewHolder)viewHolder).imgImage.setImageResource(item.getImage());
-            Glide.with(mContext).load(_url.getURL() + item.getImage()).into(((KnowledgeViewHolder)viewHolder).imgImage);
+            GlideApp.with(mContext).load(_url.getURL() + item.getImage()).into(((KnowledgeViewHolder)viewHolder).imgImage);
             ((KnowledgeViewHolder)viewHolder).txtTitle.setText(item.getTitle());
             ((KnowledgeViewHolder)viewHolder).txtDate.setText(item.getDate());
             ((KnowledgeViewHolder)viewHolder).txtCont.setText(item.getSubtitle());
