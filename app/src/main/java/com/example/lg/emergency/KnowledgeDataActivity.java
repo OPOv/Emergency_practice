@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,7 +27,9 @@ public class KnowledgeDataActivity extends AppCompatActivity {
     TextView text[] = new TextView[5];
     ImageView image[] = new ImageView[5];
 
-    TextView[][]subText = new TextView[5][10];
+    TextView[][] subText = new TextView[5][10];
+
+    CardView[][] cardViews = new CardView[5][11];
 
 
     @Override
@@ -105,6 +108,67 @@ public class KnowledgeDataActivity extends AppCompatActivity {
         subText[4][8]= (TextView)findViewById(R.id.tv5_9_KnowledgeDataActivity);
         subText[4][9]= (TextView)findViewById(R.id.tv5_10_KnowledgeDataActivity);
 
+        cardViews[0][0] = (CardView)findViewById(R.id.content_cv_KnowledgeActivity);
+        cardViews[0][1] = (CardView)findViewById(R.id.tv1_1_cv_KnowledgeActivity);
+        cardViews[0][2] = (CardView)findViewById(R.id.tv1_2_cv_KnowledgeActivity);
+        cardViews[0][3] = (CardView)findViewById(R.id.tv1_3_cv_KnowledgeActivity);
+        cardViews[0][4] = (CardView)findViewById(R.id.tv1_4_cv_KnowledgeActivity);
+        cardViews[0][5] = (CardView)findViewById(R.id.tv1_5_cv_KnowledgeActivity);
+        cardViews[0][6] = (CardView)findViewById(R.id.tv1_6_cv_KnowledgeActivity);
+        cardViews[0][7] = (CardView)findViewById(R.id.tv1_7_cv_KnowledgeActivity);
+        cardViews[0][8] = (CardView)findViewById(R.id.tv1_8_cv_KnowledgeActivity);
+        cardViews[0][9] = (CardView)findViewById(R.id.tv1_9_cv_KnowledgeActivity);
+        cardViews[0][10] = (CardView)findViewById(R.id.tv1_10_cv_KnowledgeActivity);
+
+        cardViews[1][0] = (CardView)findViewById(R.id.content2_cv_KnowledgeActivity);
+        cardViews[1][1] = (CardView)findViewById(R.id.tv2_1_cv_KnowledgeActivity);
+        cardViews[1][2] = (CardView)findViewById(R.id.tv2_2_cv_KnowledgeActivity);
+        cardViews[1][3] = (CardView)findViewById(R.id.tv2_3_cv_KnowledgeActivity);
+        cardViews[1][4] = (CardView)findViewById(R.id.tv2_4_cv_KnowledgeActivity);
+        cardViews[1][5] = (CardView)findViewById(R.id.tv2_5_cv_KnowledgeActivity);
+        cardViews[1][6] = (CardView)findViewById(R.id.tv2_6_cv_KnowledgeActivity);
+        cardViews[1][7] = (CardView)findViewById(R.id.tv2_7_cv_KnowledgeActivity);
+        cardViews[1][8] = (CardView)findViewById(R.id.tv2_8_cv_KnowledgeActivity);
+        cardViews[1][9] = (CardView)findViewById(R.id.tv2_9_cv_KnowledgeActivity);
+        cardViews[1][10] = (CardView)findViewById(R.id.tv2_10_cv_KnowledgeActivity);
+
+        cardViews[2][0] = (CardView)findViewById(R.id.content3_cv_KnowledgeActivity);
+        cardViews[2][1] = (CardView)findViewById(R.id.tv3_1_cv_KnowledgeActivity);
+        cardViews[2][2] = (CardView)findViewById(R.id.tv3_2_cv_KnowledgeActivity);
+        cardViews[2][3] = (CardView)findViewById(R.id.tv3_3_cv_KnowledgeActivity);
+        cardViews[2][4] = (CardView)findViewById(R.id.tv3_4_cv_KnowledgeActivity);
+        cardViews[2][5] = (CardView)findViewById(R.id.tv3_5_cv_KnowledgeActivity);
+        cardViews[2][6] = (CardView)findViewById(R.id.tv3_6_cv_KnowledgeActivity);
+        cardViews[2][7] = (CardView)findViewById(R.id.tv3_7_cv_KnowledgeActivity);
+        cardViews[2][8] = (CardView)findViewById(R.id.tv3_8_cv_KnowledgeActivity);
+        cardViews[2][9] = (CardView)findViewById(R.id.tv3_9_cv_KnowledgeActivity);
+        cardViews[2][10] = (CardView)findViewById(R.id.tv3_10_cv_KnowledgeActivity);
+
+        cardViews[3][0] = (CardView)findViewById(R.id.content4_cv_KnowledgeActivity);
+        cardViews[3][1] = (CardView)findViewById(R.id.tv4_1_cv_KnowledgeActivity);
+        cardViews[3][2] = (CardView)findViewById(R.id.tv4_2_cv_KnowledgeActivity);
+        cardViews[3][3] = (CardView)findViewById(R.id.tv4_3_cv_KnowledgeActivity);
+        cardViews[3][4] = (CardView)findViewById(R.id.tv4_4_cv_KnowledgeActivity);
+        cardViews[3][5] = (CardView)findViewById(R.id.tv4_5_cv_KnowledgeActivity);
+        cardViews[3][6] = (CardView)findViewById(R.id.tv4_6_cv_KnowledgeActivity);
+        cardViews[3][7] = (CardView)findViewById(R.id.tv4_7_cv_KnowledgeActivity);
+        cardViews[3][8] = (CardView)findViewById(R.id.tv4_8_cv_KnowledgeActivity);
+        cardViews[3][9] = (CardView)findViewById(R.id.tv4_9_cv_KnowledgeActivity);
+        cardViews[3][10] = (CardView)findViewById(R.id.tv4_10_cv_KnowledgeActivity);
+
+        cardViews[4][0] = (CardView)findViewById(R.id.content5_cv_KnowledgeActivity);
+        cardViews[4][1] = (CardView)findViewById(R.id.tv5_1_cv_KnowledgeActivity);
+        cardViews[4][2] = (CardView)findViewById(R.id.tv5_2_cv_KnowledgeActivity);
+        cardViews[4][3] = (CardView)findViewById(R.id.tv5_3_cv_KnowledgeActivity);
+        cardViews[4][4] = (CardView)findViewById(R.id.tv5_4_cv_KnowledgeActivity);
+        cardViews[4][5] = (CardView)findViewById(R.id.tv5_5_cv_KnowledgeActivity);
+        cardViews[4][6] = (CardView)findViewById(R.id.tv5_6_cv_KnowledgeActivity);
+        cardViews[4][7] = (CardView)findViewById(R.id.tv5_7_cv_KnowledgeActivity);
+        cardViews[4][8] = (CardView)findViewById(R.id.tv5_8_cv_KnowledgeActivity);
+        cardViews[4][9] = (CardView)findViewById(R.id.tv5_9_cv_KnowledgeActivity);
+        cardViews[4][10] = (CardView)findViewById(R.id.tv5_10_cv_KnowledgeActivity);
+
+
         for(int i = 0; i <5 ; i++)
         {
             text[i].setVisibility(View.GONE);
@@ -115,6 +179,12 @@ public class KnowledgeDataActivity extends AppCompatActivity {
             for(int j = 0; j < 10; j++) {
                 subText[i][j].setVisibility(View.GONE);
                 subText[i][j].setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            }
+        }
+
+        for(int i =0 ; i < 5; i++){
+            for(int j = 0; j < 11; j++){
+                cardViews[i][j].setVisibility(View.GONE);
             }
         }
 
@@ -180,7 +250,9 @@ public class KnowledgeDataActivity extends AppCompatActivity {
                     for (int c = 0; c < temp[1].split("/split/").length - 1; c++) {
                         subText[i][c].setText(temp[1].split("/split/")[c+1]);
                         subText[i][c].setVisibility(View.VISIBLE);
+                        cardViews[i][c].setVisibility(View.VISIBLE);
                     }
+                    cardViews[i][temp[1].split("/split/").length-1].setVisibility(View.VISIBLE);
                 }
             }
 

@@ -48,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/content_cv_KnowledgeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-1_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-2_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +113,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-3_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +126,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-4_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +139,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-5_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,7 +152,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-6_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +165,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-7_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,7 +179,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-8_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +193,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-9_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -196,7 +206,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv1-10_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,7 +220,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/content2_cv_KnowledgeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -245,7 +257,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-1_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,7 +271,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-2_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -271,7 +285,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-3_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -283,7 +298,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-4_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +311,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-5_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -307,7 +324,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-6_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -319,7 +337,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-7_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -332,7 +351,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-8_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -345,7 +365,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-9_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -357,7 +378,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv2-10_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -370,7 +392,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/content3_cv_KnowledgeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -406,7 +429,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-1_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -419,7 +443,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-2_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -432,7 +457,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-3_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -444,7 +470,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-4_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -456,7 +483,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-5_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -468,7 +496,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-6_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -480,7 +509,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-7_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -493,7 +523,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-8_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -506,7 +537,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-9_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -518,7 +550,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv3-10_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -531,7 +564,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/content4_cv_KnowledgeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -567,7 +601,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-1_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -580,7 +615,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-2_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -593,7 +629,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-3_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -605,7 +642,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-4_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -617,7 +655,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-5_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -629,7 +668,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-6_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -641,7 +681,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-7_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -654,7 +695,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-8_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -667,7 +709,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-9_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -679,7 +722,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv4-10_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -692,7 +736,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/content5_cv_KnowledgeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -728,7 +773,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-1_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -741,7 +787,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-2_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -754,7 +801,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-3_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -766,7 +814,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-4_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -778,7 +827,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-5_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -790,7 +840,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-6_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -802,7 +853,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-7_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -815,7 +867,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-8_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -828,7 +881,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-9_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -840,7 +894,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardCornerRadius="10dp"
+            android:id="@+id/tv5-10_cv_KnowledgeActivity">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
