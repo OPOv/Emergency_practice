@@ -7,8 +7,6 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -63,7 +61,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
-
 
     <WebView
         android:id="@+id/webview"

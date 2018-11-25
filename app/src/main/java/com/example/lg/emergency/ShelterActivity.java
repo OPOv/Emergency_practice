@@ -59,7 +59,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     public ArrayList<DataItem> shelterList;
     public ArrayList<MapPOIItem> markerList;
     public Dao dao;
-    public int onoff, onoff1;
+    public int onoff;
 
     public int[] dist = {2, 4, 6, 8};
 
@@ -111,7 +111,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
 
         getLocation();
         final net.daum.mf.map.api.MapPoint mapPoint = net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude);
-        mapView.setMapCenterPoint(mapPoint, true);
+        mapView.setMapCenterPointAndZoomLevel(mapPoint, 2, true);
 
         cMarker = new MapPOIItem();
 
@@ -281,10 +281,10 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
                     getLocation();
 
                     // 모의 위치
-//                    latitude = 37.7585837;
-//                    longitude = 128.8860886;
+//                    latitude = 37.8930999;
+//                    longitude = 127.6908277;
 
-                    mapView.setMapCenterPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+//                    mapView.setMapCenterPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
                     cMarker.setMapPoint(net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord(latitude, longitude));
                     cMarker.setItemName("현재위치");
                     cMarker.setTag(0);
@@ -293,16 +293,24 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
                     mapView.addPOIItem(cMarker);
                     mapView.selectPOIItem(cMarker, true);
 
-                    // 못찾으면 범위를 4번 정도 늘리고 그래도 없으면 토스트 출력
-                    for(int i = 0; i < 4; i++){
-                        if(callShelterList(dao, infoDB, mapView, poiItemEventListener, dist[i])){
+                    // 못찾으면 범위를 4번 정도 늘리고
+                    for(int i = 0; i < 3; i++){
+                        if(callShelterList(dao, infoDB, mapView, poiItemEventListener, dist[i])) {
                             initFragment(viewPager);
+                            mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(
+                                    Math.abs(shelterList.get(shelterList.size() - 1).getLatitude() + latitude) / 2,
+                                    Math.abs(shelterList.get(shelterList.size() - 1).getLongitude() + longitude) / 2),
+                                    i + 4, true);
                             break;
-                        } else
-                            callShelterList(dao, infoDB, mapView, poiItemEventListener, dist[i]);
-                        if(i==3)
-                            Toast.makeText(ShelterActivity.this, "근처에 대피소가 없습니다", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
+                    // 그래도 범위 내에 없으면 토스트 출력
+                    if(shelterList.isEmpty()){
+                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+                        Toast.makeText(ShelterActivity.this, "근처에 대피소가 없습니다", Toast.LENGTH_SHORT).show();
+                    }
+
 
                     viewPager.setVisibility(View.VISIBLE);}
                 else{
@@ -422,7 +430,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
     // 범위 내의 대피소 목록을 메모리에 불러오는 함수
     public boolean callShelterList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, double distance){
         shelterList.clear();
-        Cursor cursor = dao.getDB("SELECT Name, Longitude, Latitude, PhoneNum FROM " + infoDB.getName());
+        Cursor cursor = dao.getDB("SELECT * FROM " + infoDB.getName());
         cursor.moveToFirst();
 
         for (int i = 1; i < cursor.getCount(); i++) {
