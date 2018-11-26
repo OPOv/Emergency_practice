@@ -42,9 +42,9 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
         progressDialog = new ProgressDialog((Activity)context);
     }
 
-    public HttpConnetion(URLClass _url)
-    {
+    public HttpConnetion(URLClass _url, Context context) {
         this.infoDB = new InformationDB("","","",_url);
+        this.context = context;
     }
 
     @Override

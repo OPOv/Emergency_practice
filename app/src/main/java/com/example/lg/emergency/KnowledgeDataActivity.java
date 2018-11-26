@@ -207,7 +207,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
 
 
         //HttpConnection Class 생성자 호출(_url : 연결 할 서버 주소)
-        HttpConnetion httpConn = new HttpConnetion(new URLClass(MainActivity.URL_Server + "DetailData"));
+        HttpConnetion httpConn = new HttpConnetion(new URLClass(MainActivity.URL_Server + "DetailData"),KnowledgeDataActivity.this);
 
         String jsonData;
         try {
