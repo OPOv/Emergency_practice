@@ -1,0 +1,61 @@
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var fs = require('fs');
+var request = require('request');
+
+var server = app.listen(3000, function(){
+  console.log("Express server has started on port 3000");
+})
+
+function requestFunc(i){
+    var queryParams = '?' + encodeURIComponent('ServiceKey') + '=CFChzWsCjrGxW16mSq%2F9diy47VtyHqy8LDip17p%2BYdwmse88ft%2BePRJrfIyJHKIhWlqLJIMcQOtiI6hM7NQ1lQ%3D%3D'
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(i);
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
+    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json');
+    queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y');
+
+    request({
+        url: url + queryParams,
+        method: 'GET'
+    }, function (error, response, body) {
+	var jsondata = JSON.parse(body);
+	jsondata = jsondata.EarthquakeIndoors[1];
+
+	var j;
+	for(j = 100; j < 150; j++){	    
+	    if(jsondata.row[j].ctprvn_nm == '강원도'){
+		var temp = JSON.stringify(jsondata.row[j]);
+		
+		if(i != 0)
+		    jsonStr = jsonStr + ',';
+		jsonStr = jsonStr + temp;
+	    }
+	    if(i == 320 && j == 9)
+		break;
+	    fs.writeFile('./data/ShelterData1.json', jsonStr, 'utf8',function(err, jsonStr){
+		if (err)
+		    console.log('err');
+		else
+		    console.log('writing...');
+	    });
+	} 	
+    });
+}
+
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
+var i;
+var jsonStr = '[';
+
+var url = 'http://apis.data.go.kr/1741000/EarthquakeIndoors/getEarthquakeIndoorsList';
+var count = 0;
+
+for(i = 1; i <= 10; i ++){
+    setTimeout(requestFunc, 500, i);
+}
+
+var router = require('./router/router')(app, fs);

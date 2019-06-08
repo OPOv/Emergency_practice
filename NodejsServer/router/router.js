@@ -25,11 +25,21 @@ module.exports = function(app, fs)
   })//end app.get()
 
   app.get('/ShelterData', function(req,res){
-    fs.readFile(__dirname + "/../data/ShelterData.json",'utf8',function(err,data){
+    fs.readFile(__dirname + "/../data/ShelterData1.json",'utf8',function(err,data){
+      data = data + ']';
       var jsondata = JSON.parse(data);
-
-      res.status(200).json(jsondata.DATA);
+      res.status(200).json(jsondata);
     })//end readFile()
+
+  })//end app.get()
+
+app.get('/AEDData', function(req,res){
+    fs.readFile(__dirname + "/../data/AEDData.json",'utf8',function(err,data){
+      data = data + ']'; 
+      var jsondata = JSON.parse(data);
+      res.status(200).json(jsondata);
+    })//end readFile()
+
   })//end app.get()
 
   app.get('/KnowledgeData', function(req,res){
