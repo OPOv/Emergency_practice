@@ -39,17 +39,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        InformationDB infoDB[] = new InformationDB[3];
+        InformationDB infoDB[] = new InformationDB[4];
         infoDB[0] = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "HospitalData"));
         infoDB[1] = new InformationDB("ShelterDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
                 "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
                 new URLClass(URL_Server + "ShelterData"));
-
-        infoDB[2] = new InformationDB("KnowledgeDB", "(id integer primary key autoincrement, Title text not null, Date text not null, " +
+        infoDB[2] = new InformationDB("AEDDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
+                "Latitude text not null, Longitude text not null, PhoneNum text);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
+                new URLClass(URL_Server + "AEDData"));
+        infoDB[3] = new InformationDB("KnowledgeDB", "(id integer primary key autoincrement, Title text not null, Date text not null, " +
                 "SubTitle text not null,  ImageSrc text not null);", "(id,Title,Date,SubTitle,ImageSrc)",
                 new URLClass(URL_Server + "KnowledgeData"));
+
 
         File dbFile = new File(Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB");
 
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         List<KnowledgeItem> items = new ArrayList<>();
 
 
-        Cursor cursor = dao[2].getDB("SELECT * FROM KnowledgeDB");
+        Cursor cursor = dao[3].getDB("SELECT * FROM KnowledgeDB");
 
         if (cursor.getCount() != 0) {
             int count = 0;
@@ -141,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         JSONArray jsonArr;
 
         try {
-            HttpConnetion httpConn = new HttpConnetion(infoDB[2], dao[2], MainActivity.this);
+            HttpConnetion httpConn = new HttpConnetion(infoDB[3], dao[3], MainActivity.this);
             jsonData = httpConn.execute().get();
             jsonArr = new JSONArray(jsonData);
 
-            httpConn.GetJsonAndExecuteSQL(jsonArr, new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"});
+            httpConn.GetJsonAndExecuteSQL(jsonArr, new String[]{"TITLE", "DATE", "SUBTITLE", "IMAGESRC"},"");
             for (int i = 0; i < infoDB.length - 1; i++) {
                 httpConn = new HttpConnetion(infoDB[i], dao[i], MainActivity.this);
                 httpConn.execute();
@@ -156,19 +159,5 @@ public class MainActivity extends AppCompatActivity {
             exceptHandling.StartingExceptionDialog();
             e.printStackTrace();
         }
-    }
-
-    public void shelter_btn(View view) { //go to shelter class
-
-        Intent Myintent = new Intent(getApplicationContext(), ShelterActivity.class);
-        startActivity(Myintent);
-
-    }
-
-    public void hospital_btn(View view) { //go to hospital class
-
-        Intent Myintent = new Intent(getApplicationContext(), DMapView.class);
-        startActivity(Myintent);
-
     }
 }

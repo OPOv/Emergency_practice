@@ -6,9 +6,6 @@ import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Created by davki on 2018-11-23.
- */
 public class WebViewClientImpl extends WebViewClient {
 
     private Activity activity = null;

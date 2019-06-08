@@ -50,6 +50,12 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
 
     public static final String URL_Server = "http://35.221.115.152:3000/";
 
+    // 최소 GPS 정보 업데이트 거리 10미터
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+
+    // 최소 GPS 정보 업데이트 시간 밀리세컨이므로 1분
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+
     public double latitude;
     public double longitude;
     public LocationManager locationManager;
@@ -410,7 +416,7 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
         }
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
@@ -422,6 +428,18 @@ public class ShelterActivity extends AppCompatActivity implements LocationListen
             longitude = location.getLongitude();
             //This is what you need:
             locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+        }
+
+        if(latitude == 0.0 && longitude == 0.0){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            if (locationManager != null) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (location != null) {
+                    // 위도 경도 저장
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
         }
 
 

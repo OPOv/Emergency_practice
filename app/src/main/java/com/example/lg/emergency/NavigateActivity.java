@@ -11,10 +11,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 
-/**
- * Created by davki on 2018-11-23.
- */
-
 public class NavigateActivity extends Activity {
 
     WebView webView;

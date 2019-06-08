@@ -1,9 +1,5 @@
 package com.example.lg.emergency;
 
-/**
- * Created by davki on 2018-09-28.
- */
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;

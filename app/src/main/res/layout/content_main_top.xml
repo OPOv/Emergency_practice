@@ -74,7 +74,6 @@
             android:layout_marginBottom="100dp"
             android:layout_marginLeft="35dp"
             android:background="@color/colorWhite"
-            android:onClick="shelter_btn"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/circle_sh" />
 
@@ -91,7 +90,6 @@
             android:layout_marginRight="35dp"
             android:background="@color/colorWhite"
 
-            android:onClick="hospital_btn"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/circle_hos" />
 

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lg.emergency">
-    <!--반드시 추가--><uses-permission android:name="android.permission.INTERNET" />
-    <!--위치정보활용시 추가--><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--위치정보활용시 추가--><uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--WIFI 상태활용시 추가--><uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--WIFI 상태활용시 추가--><uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 반드시 추가 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치정보활용시 추가 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 위치정보활용시 추가 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- WIFI 상태활용시 추가 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- WIFI 상태활용시 추가 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="3c7b66994bc02c21a1129b00228d5ad5"/>
+    <meta-data
+        android:name="com.kakao.sdk.AppKey"
+        android:value="3c7b66994bc02c21a1129b00228d5ad5" />
 
     <application
         android:allowBackup="true"
@@ -17,30 +19,26 @@
         android:roundIcon="@drawable/app_logo_image_tr"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:noHistory="true">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-
             </intent-filter>
         </activity>
         <activity android:name=".ShelterActivity" />
         <activity android:name=".KnowledgeDataActivity" />
-        <activity android:name=".test"/>
-        <activity android:name=".DMapView"/>
-        <activity android:name=".NavigateActivity"/>
+        <activity android:name=".test" />
+        <activity android:name=".DMapView" />
+        <activity android:name=".NavigateActivity" />
+        <activity android:name=".AEDActivity" />
     </application>
 
 </manifest>

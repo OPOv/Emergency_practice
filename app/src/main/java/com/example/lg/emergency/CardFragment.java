@@ -1,9 +1,5 @@
 package com.example.lg.emergency;
 
-/**
- * Created by davki on 2018-09-28.
- */
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -53,13 +49,18 @@ public class CardFragment extends Fragment {
         cardView.setMaxCardElevation(cardView.getCardElevation() * CardAdapter.MAX_ELEVATION_FACTOR);
 
         title.setText(getArguments().getString("name"));
-        phoneNum.setText(getArguments().getString("phoneNum"));
+        if(getArguments().getString("phoneNum").equals("null")){
+            phoneNum.setText("전화번호 정보가 없습니다.");
+        }
+        else {
+            phoneNum.setText(getArguments().getString("phoneNum"));
+        }
 
         // 전화 연결 인텐트
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!phoneNum.getText().equals("")) {
+                if(!(phoneNum.getText().equals("") || getArguments().getString("phoneNum").equals("null"))) {
                     startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + phoneNum.getText())));
                 } else
                     Toast.makeText(getContext(), "전화번호 정보가 없습니다", Toast.LENGTH_SHORT).show();

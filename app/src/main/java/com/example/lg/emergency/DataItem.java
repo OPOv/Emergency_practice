@@ -1,9 +1,5 @@
 package com.example.lg.emergency;
 
-/**
- * Created by davki on 2018-09-29.
- */
-
 public class DataItem {
     private String name, phoneNum, address;
     private double latitude, longitude;

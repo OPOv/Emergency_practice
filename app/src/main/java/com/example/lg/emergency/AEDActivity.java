@@ -41,11 +41,11 @@ import java.util.Comparator;
 
 import static com.example.lg.emergency.ShelterActivity.dpToPixels;
 
-public class DMapView extends AppCompatActivity implements LocationListener {
+public class AEDActivity extends AppCompatActivity implements LocationListener {
 
     FloatingActionButton fab;
     ImageButton btnBack, btnSearch, btnExit;
-    CardView btnHospital;
+    CardView btnAED;
     TextView txtBtn, txtTitle;
     EditText txtSearch;
 
@@ -62,7 +62,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     public Criteria criteria;
     public String bestProvider;
     public MapPOIItem cMarker;  // 현재위치 찍어주는 마커
-    public ArrayList<DataItem> hospitalList;
+    public ArrayList<DataItem> AEDList;
     public ArrayList<MapPOIItem> markerList;
     public Dao dao;
     public int onoff;
@@ -72,7 +72,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_aed);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
@@ -84,19 +84,16 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         mapView.setDaumMapApiKey(getResources().getString(R.string.kakao_app_key));
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        hospitalList = new ArrayList<>();
+        AEDList = new ArrayList<>();
         markerList = new ArrayList<>();
         onoff = 0;
 
         // DB Part starts
-        final InformationDB infoDB = new InformationDB("HospitalDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
-                "Latitude text not null, Longitude text not null, PhoneNum text not null);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
-                new URLClass(URL_Server + "HospitalData"));
+        final InformationDB infoDB = new InformationDB("AEDDB", "(id integer primary key autoincrement, Name text not null, Address text not null, " +
+                "Latitude text not null, Longitude text not null, PhoneNum text);", "(id, Name,Address,Latitude,Longitude,PhoneNum)",
+                new URLClass(URL_Server + "AEDData"));
 
-        File dbFile = new File(Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB");
         dao = new Dao(getApplicationContext(), infoDB);
-
-        Log.d("TEST 1 : ", Environment.getDataDirectory().getAbsolutePath() + "/data/" + getPackageName() + "/databases/HospitalDB에 db 있음");
 
         // DB part end
 
@@ -123,7 +120,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         cMarker = new MapPOIItem();
         btnBack = findViewById(R.id.btn_back);
         fab = findViewById(R.id.fab_c_location);
-        btnHospital = findViewById(R.id.btn_hospital);
+        btnAED = findViewById(R.id.btn_hospital);
         txtBtn = findViewById(R.id.txt_btn);
         txtTitle = findViewById(R.id.title);
         btnSearch = findViewById(R.id.btn_search);
@@ -134,10 +131,6 @@ public class DMapView extends AppCompatActivity implements LocationListener {
         final ViewPager viewPager = findViewById(R.id.viewPager);
 
         float density = getResources().getDisplayMetrics().density;
-        int partialWidth = (int) (16 * density); // 16dp
-        int pageMargin = (int) (8 * density); // 8dp
-
-        int viewPagerPadding = pageMargin - partialWidth;
 
         // 뷰페이저 패딩!!! 존나 중요함
         viewPager.setPageMargin(-180);
@@ -154,7 +147,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             public void onPageSelected(int position) {
 
                 mapView.setMapCenterPointAndZoomLevel(
-                        MapPoint.mapPointWithGeoCoord(hospitalList.get(position).getLatitude(), hospitalList.get(position).getLongitude()),
+                        MapPoint.mapPointWithGeoCoord(AEDList.get(position).getLatitude(), AEDList.get(position).getLongitude()),
                         2, true);
                 mapView.selectPOIItem(markerList.get(position), true);
             }
@@ -220,15 +213,14 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             }
         });
 
-        // 가까운 병원 버튼 눌렀을 때 액션
-        btnHospital.setOnClickListener(new View.OnClickListener() {
+        btnAED.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(onoff % 2 == 0){
                     onoff++;
                     mapView.removePOIItem(cMarker);
-                    btnHospital.setCardBackgroundColor(getResources().getColor(R.color.colorOrange));
+                    btnAED.setCardBackgroundColor(getResources().getColor(R.color.colorOrange));
                     txtBtn.setTextColor(getResources().getColor(R.color.colorWhite));
                     txtBtn.setText(" 취소 ");
                     getLocation();
@@ -248,20 +240,20 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
                     // 못찾으면 범위를 4번 정도 늘리고
                     for(int i = 0; i < 3; i++){
-                        if(callHospitalList(dao, infoDB, mapView, poiItemEventListener, dist[i])) {
+                        if(callAEDList(dao, infoDB, mapView, poiItemEventListener, dist[i])) {
                             initFragment(viewPager);
                             mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(
-                                    Math.abs(hospitalList.get(hospitalList.size() - 1).getLatitude() + latitude) / 2,
-                                    Math.abs(hospitalList.get(hospitalList.size() - 1).getLongitude() + longitude) / 2),
+                                    Math.abs(AEDList.get(AEDList.size() - 1).getLatitude() + latitude) / 2,
+                                    Math.abs(AEDList.get(AEDList.size() - 1).getLongitude() + longitude) / 2),
                                     i + 4, true);
                             break;
                         }
                     }
 
                     // 그래도 범위 내에 없으면 토스트 출력
-                    if(hospitalList.isEmpty()){
+                    if(AEDList.isEmpty()){
                         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-                        Toast.makeText(DMapView.this, "근처에 병원이 없습니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AEDActivity.this, "근처에 AED가 없습니다", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -270,9 +262,9 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                     onoff = 0;
                     mapView.removeAllPOIItems();
                     viewPager.setVisibility(View.GONE);
-                    btnHospital.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
+                    btnAED.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
                     txtBtn.setTextColor(getResources().getColor(R.color.colorOrange));
-                    txtBtn.setText(" 가까운 병원 보기 ");
+                    txtBtn.setText(" 근처 AED 찾기 ");
                 }
 
 
@@ -315,13 +307,13 @@ public class DMapView extends AppCompatActivity implements LocationListener {
                     case EditorInfo.IME_ACTION_GO:
                         mapView.removePOIItem(cMarker);
                         if(!searchItem(dao, infoDB, mapView, poiItemEventListener, txtSearch.getText().toString())){
-                            Toast.makeText(DMapView.this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AEDActivity.this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
                             mapView.removeAllPOIItems();
                             viewPager.setVisibility(View.GONE);
                             break;
                         } else {
                             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(
-                                    hospitalList.get(0).getLatitude(), hospitalList.get(0).getLongitude()), true);
+                                    AEDList.get(0).getLatitude(), AEDList.get(0).getLongitude()), true);
 
                             initFragment(viewPager);
                             viewPager.setVisibility(View.VISIBLE);
@@ -394,8 +386,8 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
     }
 
-    public boolean callHospitalList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, double distance){
-        hospitalList.clear();
+    public boolean callAEDList(Dao dao, InformationDB infoDB, MapView mapView, MapView.POIItemEventListener poi, double distance){
+        AEDList.clear();
         Cursor cursor = dao.getDB("SELECT * FROM " + infoDB.getName());
         cursor.moveToFirst();
 
@@ -405,7 +397,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             if(CalculDistance(Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
                     Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))),latitude,longitude) < distance) {
 
-                hospitalList.add(new DataItem(cursor.getString(cursor.getColumnIndex("Name")),
+                AEDList.add(new DataItem(cursor.getString(cursor.getColumnIndex("Name")),
                         cursor.getString(cursor.getColumnIndex("PhoneNum")),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))),
@@ -414,12 +406,11 @@ public class DMapView extends AppCompatActivity implements LocationListener {
             }
         }
 
-        // 만약 병원 데이터가 비어있다면 false 리턴
-        if(hospitalList.isEmpty())
+        if(AEDList.isEmpty())
             return false;
 
         // 거리순으로 정렬
-        Collections.sort(hospitalList, new Comparator<DataItem>() {
+        Collections.sort(AEDList, new Comparator<DataItem>() {
             @Override
             public int compare(DataItem o1, DataItem o2) {
                 if(Math.pow(o1.getLatitude() - latitude, 2) + Math.pow(o1.getLongitude() - longitude, 2) >
@@ -435,12 +426,12 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
         // 마커 리스트 초기화
         markerList.clear();
-        for(int i = 1; i <= hospitalList.size(); i++){
+        for(int i = 1; i <= AEDList.size(); i++){
             MapPOIItem lastMarker = new MapPOIItem();
             markerList.add(lastMarker);
-            lastMarker.setItemName(hospitalList.get(i - 1).getName());
+            lastMarker.setItemName(AEDList.get(i - 1).getName());
             lastMarker.setTag(i);
-            lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(hospitalList.get(i - 1).getLatitude(), hospitalList.get(i - 1).getLongitude()));
+            lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(AEDList.get(i - 1).getLatitude(), AEDList.get(i - 1).getLongitude()));
 
             // 기본으로 제공하는 BluePin 마커 모양.
             lastMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -468,25 +459,23 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
         Cursor cursor = dao.getDB("SELECT * FROM " + infoDB.getName());
         cursor.moveToFirst();
-        hospitalList.clear();
+        AEDList.clear();
 
         for (int i = 1; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             if(cursor.getString(cursor.getColumnIndex("Address")).contains(searchKey)){
-                hospitalList.add(new DataItem(cursor.getString(cursor.getColumnIndex("Name")),
+                AEDList.add(new DataItem(cursor.getString(cursor.getColumnIndex("Name")),
                         cursor.getString(cursor.getColumnIndex("PhoneNum")),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Latitude"))),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex("Longitude"))),
                         cursor.getString(cursor.getColumnIndex("Address"))));
             }
         }
-
-        // 만약 병원 데이터가 비어있다면 false 리턴
-        if(hospitalList.isEmpty())
+        if(AEDList.isEmpty())
             return false;
 
         // 거리순으로 정렬
-        Collections.sort(hospitalList, new Comparator<DataItem>() {
+        Collections.sort(AEDList, new Comparator<DataItem>() {
             @Override
             public int compare(DataItem o1, DataItem o2) {
                 if(Math.pow(o1.getLatitude() - latitude, 2) + Math.pow(o1.getLongitude() - longitude, 2) >
@@ -502,12 +491,12 @@ public class DMapView extends AppCompatActivity implements LocationListener {
 
         // 마커 리스트 초기화
         markerList.clear();
-        for(int i = 1; i <= hospitalList.size(); i++){
+        for(int i = 1; i <= AEDList.size(); i++){
             MapPOIItem lastMarker = new MapPOIItem();
             markerList.add(lastMarker);
-            lastMarker.setItemName(hospitalList.get(i - 1).getName());
+            lastMarker.setItemName(AEDList.get(i - 1).getName());
             lastMarker.setTag(i);
-            lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(hospitalList.get(i - 1).getLatitude(), hospitalList.get(i - 1).getLongitude()));
+            lastMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(AEDList.get(i - 1).getLatitude(), AEDList.get(i - 1).getLongitude()));
 
             // 기본으로 제공하는 BluePin 마커 모양.
             lastMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -528,7 +517,7 @@ public class DMapView extends AppCompatActivity implements LocationListener {
     // 아이템 갯수만큼 프래그먼트 만들기
     public void initFragment(ViewPager viewPager){
 
-        CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(), dpToPixels(2, this), hospitalList.size(), hospitalList);
+        CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(), dpToPixels(2, this), AEDList.size(), AEDList);
         ShadowTransformer fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
         fragmentCardShadowTransformer.enableScaling(true);
 

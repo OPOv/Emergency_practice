@@ -112,15 +112,17 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
             exceptHandling.StartingExceptionDialog();
         }
         else {
-            if (infoDB.getName().equals("HospitalDB") || infoDB.getName().equals("ShelterDB")) {
+            if (infoDB.getName().equals("HospitalDB") || infoDB.getName().equals("ShelterDB") || infoDB.getName().equals("AEDDB")) {
                 JSONArray jsonArr = null;
                 try {
                     jsonArr = new JSONArray(jsonData);
 
                     if (infoDB.getName().equals("HospitalDB"))
-                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"});
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"MC_NM", "ROAD_ADDRESS", "LAT", "LNG", "PHONE_NO"}, infoDB.getName());
                     else if (infoDB.getName().equals("ShelterDB"))
-                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"TSUNAMI_SHELTER_NM", "LOT_ADDRESS", "LAT", "LNG", "PHONE_NO"});
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"vt_acmdfclty_nm", "dtl_adres", "ycord", "xcord", "mngps_telno"}, infoDB.getName());
+                    else if (infoDB.getName().equals("AEDDB"))
+                        this.GetJsonAndExecuteSQL(jsonArr, new String[]{"buildPlace", "buildAddress", "wgs84Lat", "wgs84Lon", "managerTel"}, infoDB.getName());
                 } catch (JSONException e) {
                     ExceptionHandling exceptHandling = new ExceptionHandling(e,context,"초기 설정 중 문제가 발생했습니다. \n지속적으로 문제발생시 어플리케이션 개발자에게 문의하십시오");
                     exceptHandling.StartingExceptionDialog();
@@ -133,11 +135,15 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
         super.onPostExecute(jsonData);
     }
 
-    public ArrayList<String> JsonParsing(JSONObject jsonObj, String[] attribute) throws JSONException {
+    public ArrayList<String> JsonParsing(JSONObject jsonObj, String[] attribute, String dbName) throws JSONException {
         ArrayList<String> arrList = new ArrayList<>(attribute.length);
-
         for (int i = 0; i < attribute.length; i++) {
-            arrList.add(jsonObj.getString(attribute[i]));
+            if(dbName.equals("AEDDB")){
+                JSONObject jsonObj1 = jsonObj.getJSONObject(attribute[i]);
+                arrList.add(jsonObj1.getString("_text"));
+            }
+            else
+                arrList.add(jsonObj.getString(attribute[i]));
         }
         return arrList;
     }
@@ -154,14 +160,14 @@ public class HttpConnetion extends AsyncTask<String, Void, String> {
         return sql;
     }
 
-    public ArrayList<String> GetJsonReturnArrayList(JSONArray jsonArr, String[] attribute, int i) throws JSONException {
+    public ArrayList<String> GetJsonReturnArrayList(JSONArray jsonArr, String[] attribute, int i, String dbName) throws JSONException {
         JSONObject jsonObj = jsonArr.getJSONObject(i);
-        return this.JsonParsing(jsonObj,attribute);
+        return this.JsonParsing(jsonObj,attribute, dbName);
     }
 
-    public void GetJsonAndExecuteSQL(JSONArray jsonArr, String[] attribute) throws JSONException {
+    public void GetJsonAndExecuteSQL(JSONArray jsonArr, String[] attribute, String dbName) throws JSONException {
         for (int i = 0; i < jsonArr.length(); i++) {
-            ArrayList<String> arrList = GetJsonReturnArrayList(jsonArr,attribute,i);
+            ArrayList<String> arrList = GetJsonReturnArrayList(jsonArr,attribute,i,dbName);
 
             dao.ExecuteSQL(MakeSql(attribute, arrList, infoDB, i));
         }

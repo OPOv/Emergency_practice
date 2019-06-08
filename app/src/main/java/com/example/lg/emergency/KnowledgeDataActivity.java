@@ -226,7 +226,7 @@ public class KnowledgeDataActivity extends AppCompatActivity {
              * {"TEXT1", "TEXT2","TEXT3", "TEXT4","TEXT5", "IMAGE1","IMAGE2", "IMAGE3","IMAGE4", "IMAGE5"}는 찾을 키값
              */
             ArrayList<String> arrList = httpConn.GetJsonReturnArrayList(jsonArr,
-                    new String[]{"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "IMAGE1", "IMAGE2", "IMAGE3", "IMAGE4", "IMAGE5"}, position);
+                    new String[]{"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "IMAGE1", "IMAGE2", "IMAGE3", "IMAGE4", "IMAGE5"}, position, "");
 
             /*
              * ArrayList에 담긴 Value들을 각각의 TextView와 ImagaView에 출력

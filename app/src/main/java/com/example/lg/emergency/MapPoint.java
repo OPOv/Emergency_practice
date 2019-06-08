@@ -1,9 +1,5 @@
 package com.example.lg.emergency;
 
-/**
- * Created by davki on 2018-09-26.
- */
-
 public class MapPoint {
     private String name;
     private double latitude;
