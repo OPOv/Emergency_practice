@@ -96,6 +96,14 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
                     
                 }
             });
+            ((KnowledgeHeader)viewHolder).btnAED.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent(mContext, AEDActivity.class);
+                    mContext.startActivity(mIntent);
+
+                }
+            });
         }
 
         else{
@@ -110,12 +118,13 @@ public class KnowledgeAdapter extends RecyclerView.Adapter {
     }
 
     class KnowledgeHeader extends RecyclerView.ViewHolder{
-        ImageButton btnShelter, btnHospital;
+        ImageButton btnShelter, btnHospital,btnAED;
 
         public KnowledgeHeader(View itemView) {
             super(itemView);
             btnHospital = itemView.findViewById(R.id.btn_hospital);
             btnShelter = itemView.findViewById(R.id.btn_shelter);
+            btnAED = itemView.findViewById(R.id.aed_btn);
         }
     }
 
