@@ -9,6 +9,7 @@ import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 
 public class NavigateActivity extends Activity {
@@ -30,8 +31,9 @@ public class NavigateActivity extends Activity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        WebViewClientImpl webViewClient = new WebViewClientImpl(this);
-        webView.setWebViewClient(webViewClient);
+        //WebViewClientImpl webViewClient = new WebViewClientImpl(this);
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
